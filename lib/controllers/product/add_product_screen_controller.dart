@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -45,7 +47,7 @@ class AddProductScreenController extends GetxController {
   TextEditingController salePrice = TextEditingController();
   @override
   void onInit() async {
-    fillfileds();
+    // fillfileds();
     await loadBrands();
     await loadCategories();
     selectedBrand = Rx(brands!.first);
@@ -237,8 +239,10 @@ class AddProductScreenController extends GetxController {
 
   void addAttribute() {
     Map<String, TextEditingController> data = {
-      "name": TextEditingController(),
-      "value": TextEditingController(),
+      "nameAr": TextEditingController(),
+      "valueAr": TextEditingController(),
+      "nameEn": TextEditingController(),
+      "valueEn": TextEditingController(),
     };
     attributes.add(data);
     update();
@@ -382,6 +386,9 @@ class AddProductScreenController extends GetxController {
 
   void submit() async {
     Map<String, String> descriptionAr = {};
+    attributes.forEach((element) {
+      print(element);
+    });
     for (var element in attributes) {
       descriptionAr[element['nameAr']!.text.trim()] =
           element['valueAr']!.text.trim();
@@ -410,99 +417,86 @@ class AddProductScreenController extends GetxController {
     uploadMedia(true);
     uploadProductDetails(true);
     update();
-    await Future.delayed(
-      const Duration(seconds: 2),
-      () async {
-        ResponseModel responseModel =
-            await AddProductApi().callApi(productModel: productModel);
-        if (responseModel.code == 200) {
-          productModel = ProductModel.fromMap(responseModel.data);
-          createProduct(false);
-          update();
-          await Future.delayed(
-            const Duration(seconds: 2),
-            () async {
-              ResponseModel uploadMediaResponse = await AddMediaApi()
-                  .callApi(productModel: productModel, images: imagesBytes);
-              if (uploadMediaResponse.code == 200) {
-                uploadMedia(false);
-                update();
-                textAttributes.forEach((element) async {
-                  List<String> itemsAr = [];
-                  textAttributesValues[element.hashCode]!
-                      .forEach((textAttributesValue) {
-                    itemsAr.add(textAttributesValue["valueAr"]!.text.trim());
-                  });
-                  List<String> itemsEn = [];
-                  textAttributesValues[element.hashCode]!
-                      .forEach((textAttributesValue) {
-                    itemsEn.add(textAttributesValue["valueEn"]!.text.trim());
-                  });
-                  List<Uint8List> mediaAr = [];
-                  textAttributesValues[element.hashCode]!
-                      .forEach((textAttributesValue) async {
-                    mediaAr.add(textAttributesValue['imageByte'] ??
-                        await loadPlaceHolderFile());
-                  });
-                  List<Uint8List> mediaEn = [];
-                  textAttributesValues[element.hashCode]!
-                      .forEach((textAttributesValue) async {
-                    mediaEn.add(textAttributesValue['imageByte'] ??
-                        await loadPlaceHolderFile());
-                  });
-                  late ResponseModel uploadAttributeResponse;
-                  await Future.delayed(const Duration(seconds: 2), () async {
-                    uploadAttributeResponse =
-                        await AddTextAttributeApi().callApi(
-                      productModel: productModel,
-                      attributeModel: AttributeModel(
-                        NameAr: element['nameAr']!.text.trim(),
-                        NameEn: element['nameAr']!.text.trim(),
-                        IsActive: true,
-                      ),
-                      itemsAr: itemsAr,
-                      itemsEn: itemsEn,
-                      mediaAr: mediaAr,
-                      mediaEn: mediaEn,
-                    );
-                  });
-                });
-              }
-              imageAttributes.forEach((element) async {
-                List<Uint8List> itemsAr = [],
-                    itemsEn = [],
-                    mediaAr = [],
-                    mediaEn = [];
-                imageAttributesValues[element.hashCode]!.forEach((element) {
-                  itemsAr.add(element["imageByteAr"]);
-                  itemsEn.add(element["imageByteEn"]);
-                  mediaAr.add(element["imageByte"]);
-                  mediaEn.add(element["imageByte"]);
-                });
-                ResponseModel uploadImageAttributesResponse =
-                    await AddImageAttributeApi().callApi(
-                  productModel: productModel,
-                  attributeModel: AttributeModel(
-                    NameAr: element['nameAr']!.text.trim(),
-                    NameEn: element['nameEn']!.text.trim(),
-                  ),
-                  itemsAr: itemsAr,
-                  itemsEn: itemsEn,
-                  mediaAr: mediaAr,
-                  mediaEn: mediaEn,
-                );
-              });
-              uploadProductDetails(false);
-              update();
-              Get.back();
-              ProductScreenController productScreenController =
-                  Get.find<ProductScreenController>();
-              productScreenController.onInit();
-            },
+    ResponseModel responseModel =
+        await AddProductApi().callApi(productModel: productModel);
+    if (responseModel.code == 200) {
+      productModel = ProductModel.fromMap(responseModel.data);
+      createProduct(false);
+      update();
+
+      ResponseModel uploadMediaResponse = await AddMediaApi()
+          .callApi(productModel: productModel, images: imagesBytes);
+      if (uploadMediaResponse.code == 200) {
+        uploadMedia(false);
+        update();
+        textAttributes.forEach((element) async {
+          List<String> itemsAr = [];
+          textAttributesValues[element.hashCode]!
+              .forEach((textAttributesValue) {
+            itemsAr.add(textAttributesValue["valueAr"]!.text.trim());
+          });
+          List<String> itemsEn = [];
+          textAttributesValues[element.hashCode]!
+              .forEach((textAttributesValue) {
+            itemsEn.add(textAttributesValue["valueEn"]!.text.trim());
+          });
+          List<Uint8List> mediaAr = [];
+          textAttributesValues[element.hashCode]!
+              .forEach((textAttributesValue) async {
+            mediaAr.add(textAttributesValue['imageByte'] ??
+                await loadPlaceHolderFile());
+          });
+          List<Uint8List> mediaEn = [];
+          textAttributesValues[element.hashCode]!
+              .forEach((textAttributesValue) async {
+            mediaEn.add(textAttributesValue['imageByte'] ??
+                await loadPlaceHolderFile());
+          });
+          late ResponseModel uploadAttributeResponse;
+          // await Future.delayed(const Duration(seconds: 2), () async {
+          uploadAttributeResponse = await AddTextAttributeApi().callApi(
+            productModel: productModel,
+            attributeModel: AttributeModel(
+              NameAr: element['nameAr']!.text.trim(),
+              NameEn: element['nameAr']!.text.trim(),
+              IsActive: true,
+            ),
+            itemsAr: itemsAr,
+            itemsEn: itemsEn,
+            mediaAr: mediaAr,
+            mediaEn: mediaEn,
           );
-        }
-      },
-    );
+          // });
+        });
+      }
+      imageAttributes.forEach((element) async {
+        List<Uint8List> itemsAr = [], itemsEn = [], mediaAr = [], mediaEn = [];
+        imageAttributesValues[element.hashCode]!.forEach((element) {
+          itemsAr.add(element["imageByteAr"] ?? loadPlaceHolderFile());
+          itemsEn.add(element["imageByteEn"] ?? loadPlaceHolderFile());
+          mediaAr.add(element["imageByte"] ?? loadPlaceHolderFile());
+          mediaEn.add(element["imageByte"] ?? loadPlaceHolderFile());
+        });
+        ResponseModel uploadImageAttributesResponse =
+            await AddImageAttributeApi().callApi(
+          productModel: productModel,
+          attributeModel: AttributeModel(
+            NameAr: element['nameAr']!.text.trim(),
+            NameEn: element['nameEn']!.text.trim(),
+          ),
+          itemsAr: itemsAr,
+          itemsEn: itemsEn,
+          mediaAr: mediaAr,
+          mediaEn: mediaEn,
+        );
+      });
+      uploadProductDetails(false);
+      update();
+      Get.back();
+      ProductScreenController productScreenController =
+          Get.find<ProductScreenController>();
+      productScreenController.onInit();
+    }
 
     // await AddProductApi().callApi(
     //   productModel: ,

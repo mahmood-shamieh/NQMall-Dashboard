@@ -8,6 +8,7 @@ import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/shared/constant.dart';
+import 'package:nq_mall_dashboard/shared/string_utility.dart';
 import 'package:nq_mall_dashboard/shared/theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -43,7 +44,7 @@ class ProductItem extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                          "${Constants.mediaUrl}/${i.URL!.replaceAll('\\', "/")}"),
+                          "${Constants.mediaUrl}/${i.URL!.toUrl()}"),
                     ),
                   ),
                 );
@@ -55,7 +56,7 @@ class ProductItem extends StatelessWidget {
         //   borderRadius: BorderRadius.circular(4),
         //   image: DecorationImage(
         //     image: NetworkImage(
-        //         "${Constants.mediaUrl!}/${productModel.LogoUrl!.replaceAll('\\', "/")}"),
+        //         "${Constants.mediaUrl!}/${productModel.LogoUrl!.toUrl()}"),
         //   ),
         // ),
       ),

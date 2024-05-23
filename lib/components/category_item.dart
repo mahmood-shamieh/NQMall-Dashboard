@@ -6,6 +6,7 @@ import 'package:nq_mall_dashboard/components/text_widget.dart';
 import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/shared/constant.dart';
+import 'package:nq_mall_dashboard/shared/string_utility.dart';
 import 'package:nq_mall_dashboard/shared/theme.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -30,7 +31,7 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           image: DecorationImage(
             image: NetworkImage(
-                "${Constants.mediaUrl!}/${categoryModel.ImageURL!.replaceAll('\\', "/")}"),
+                "${Constants.mediaUrl!}/${categoryModel.ImageURL!.toUrl()}"),
           ),
         ),
       ),

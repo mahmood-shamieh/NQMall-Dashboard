@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
+
 extension CapitalizeExtension on String {
   String capitalizeFirstChar() {
-    if (this.isEmpty) return "";
-    return this[0].toUpperCase() + this.substring(1);
+    if (isEmpty) return "";
+    return this[0].toUpperCase() + substring(1);
+  }
+
+  String toUrl() {
+    return replaceAll('\\', '/');
   }
 }

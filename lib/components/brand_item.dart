@@ -7,6 +7,7 @@ import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/shared/constant.dart';
+import 'package:nq_mall_dashboard/shared/string_utility.dart';
 import 'package:nq_mall_dashboard/shared/theme.dart';
 
 class BrandItem extends StatelessWidget {
@@ -31,7 +32,7 @@ class BrandItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           image: DecorationImage(
             image: NetworkImage(
-                "${Constants.mediaUrl!}/${brandModel.LogoUrl!.replaceAll('\\', "/")}"),
+                "${Constants.mediaUrl!}/${brandModel.LogoUrl!.toUrl()}"),
           ),
         ),
       ),

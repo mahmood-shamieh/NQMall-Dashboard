@@ -8,7 +8,7 @@ import 'package:nq_mall_dashboard/shared/theme.dart';
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? showBackButton;
   List<Widget>? actions;
-  AppBarWidget({super.key, this.showBackButton})
+  AppBarWidget({super.key, this.showBackButton, this.actions})
       : preferredSize = const Size.fromHeight(kToolbarHeight);
 
   @override
@@ -50,7 +50,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           ],
         ),
         leading: widget.showBackButton ?? false
-            ? Container()
+            ? IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(
+                  Icons.keyboard_arrow_left_sharp,
+                  size: 30,
+                  color: MyTheme.iconColor,
+                ),
+              )
             : IconButton(
                 onPressed: () => Scaffold.of(context).openDrawer(),
                 icon: Icon(
@@ -58,22 +65,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   color: MyTheme.iconColor,
                 ),
               ),
-        actions: [
-          widget.showBackButton ?? false
-              ? IconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(
-                    Icons.keyboard_arrow_left_sharp,
-                    size: 30,
-                    color: MyTheme.iconColor,
-                  ),
-                )
-              : IconButton(
-                  onPressed: () {},
-                  icon: Container(),
-                ),
-          ...(widget.actions ?? [])
-        ],
+        actions: widget.actions,
       ),
     );
   }

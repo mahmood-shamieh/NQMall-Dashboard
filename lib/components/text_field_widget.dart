@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../shared/theme.dart';
@@ -8,16 +10,17 @@ class TextFieldWidget extends StatefulWidget {
   final Widget? icon;
   final bool? isPasswordField;
   bool showPassword = true;
+  int? maxLine;
   EdgeInsets? padding, margin;
-  TextFieldWidget({
-    super.key,
-    this.controller,
-    this.hintText,
-    this.icon,
-    this.isPasswordField,
-    this.padding,
-    this.margin,
-  });
+  TextFieldWidget(
+      {super.key,
+      this.controller,
+      this.hintText,
+      this.icon,
+      this.isPasswordField,
+      this.padding,
+      this.margin,
+      this.maxLine});
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -27,7 +30,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: widget.maxLine == null ? null : 50,
       padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 2),
       margin: widget.margin ?? const EdgeInsets.symmetric(horizontal: 2),
       child: TextField(
@@ -37,6 +40,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           fontWeight: FontWeight.w300,
           fontSize: 12,
         ),
+        maxLines: widget.maxLine,
         obscureText:
             widget.isPasswordField ?? false ? widget.showPassword : false,
         decoration: InputDecoration(

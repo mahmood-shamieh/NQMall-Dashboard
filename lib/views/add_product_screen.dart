@@ -17,6 +17,7 @@ import 'package:nq_mall_dashboard/controllers/category/add_category_screen_contr
 import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
+import 'package:nq_mall_dashboard/shared/string_utility.dart';
 import 'package:nq_mall_dashboard/shared/theme.dart';
 
 import '../components/text_widget.dart';
@@ -257,7 +258,7 @@ class AddProductScreen extends StatelessWidget {
                                                               DecorationImage(
                                                             fit: BoxFit.cover,
                                                             image: NetworkImage(
-                                                              "${Constants.mediaUrl!}/${item.LogoUrl!.replaceAll('\\', "/")}",
+                                                              "${Constants.mediaUrl!}/${item.LogoUrl!.toUrl()}",
                                                             ),
                                                           ),
                                                         ),
@@ -432,7 +433,7 @@ class AddProductScreen extends StatelessWidget {
                                                               DecorationImage(
                                                             fit: BoxFit.cover,
                                                             image: NetworkImage(
-                                                              "${Constants.mediaUrl!}/${item.ImageURL!.replaceAll('\\', "/")}",
+                                                              "${Constants.mediaUrl!}/${item.ImageURL!.toUrl()}",
                                                             ),
                                                           ),
                                                         ),
