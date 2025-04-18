@@ -38,6 +38,7 @@ class ProductScreenController extends GetxController {
       "page": page.toString(),
       "limit": itemPerPage.toString(),
     });
+    print(response);
 
     PaginationModel paginationModel = PaginationModel.fromMap(response.data);
     List<ProductModel> temp = paginationModel.data!

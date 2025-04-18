@@ -1,0 +1,2 @@
+/Users/macbook/Documents/NQMall-Dashboard/android/app/.cxx/Debug/yp4q503p/x86/CMakeFiles/edit_cache.dir
+/Users/macbook/Documents/NQMall-Dashboard/android/app/.cxx/Debug/yp4q503p/x86/CMakeFiles/rebuild_cache.dir
