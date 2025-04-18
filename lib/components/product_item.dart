@@ -84,6 +84,7 @@ class ProductItem extends StatelessWidget {
       ),
       SizedBox(
         // color: Colors.blue,
+
         width: isMobile ?? false
             ? MediaQuery.of(context).size.width
             : MediaQuery.of(context).size.width / 8,

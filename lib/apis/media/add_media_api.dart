@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
-import 'package:nq_mall_dashboard/shared/fike_utility.dart';
+import 'package:nq_mall_dashboard/shared/file_utility.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 
 import '../../models/response_model.dart';

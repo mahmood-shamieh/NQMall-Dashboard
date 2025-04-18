@@ -45,7 +45,7 @@ class ProductScreenController extends GetxController {
           (e) => ProductModel.fromMap(e),
         )
         .toList();
-    products!.clear();
+    // products!.clear();
     if (temp.isEmpty) {
       page--;
     } else {

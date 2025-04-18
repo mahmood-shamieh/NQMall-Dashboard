@@ -18,8 +18,12 @@ import '../controllers/product/edit_text_attributes_screen_controller.dart';
 class EditTextAttributesScreen extends StatelessWidget {
   ProductModel productModel;
   List<AttributeModel> attributes;
+  bool? isArabic;
   EditTextAttributesScreen(
-      {super.key, required this.productModel, required this.attributes});
+      {super.key,
+      required this.productModel,
+      required this.attributes,
+      this.isArabic});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class EditTextAttributesScreen extends StatelessWidget {
         ),
       ),
       builder: (controller) => Directionality(
-        textDirection: currentDirection,
+        textDirection: TextDirection.rtl,
         child: Scaffold(
           backgroundColor: MyTheme.blackColor,
           appBar: AppBarWidget(
@@ -63,32 +67,36 @@ class EditTextAttributesScreen extends StatelessWidget {
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 decoration:
                                     BoxDecoration(color: MyTheme.appBarColor),
-                                child: Column(
-                                  children: controller.currentAttributes
-                                      .map(
-                                        (e) => Container(
-                                          padding: const EdgeInsets.all(4),
-                                          margin: const EdgeInsets.symmetric(
-                                            vertical: 5,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: MyTheme.blackColor,
-                                            borderRadius: MyTheme.buttonsRadius,
-                                          ),
-                                          child: TextAttributeWidget(
-                                            attributeModel: e,
-                                            isArabic: true,
-                                            isDeleted: controller
-                                                .deletedAttributes
-                                                .contains(e),
-                                            deleteAction: () => controller
-                                                .addToAttributesToDelete(
+                                child: Directionality(
+                                  textDirection: currentDirection,
+                                  child: Column(
+                                    children: controller.currentAttributes
+                                        .map(
+                                          (e) => Container(
+                                            padding: const EdgeInsets.all(4),
+                                            margin: const EdgeInsets.symmetric(
+                                              vertical: 5,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: MyTheme.blackColor,
+                                              borderRadius:
+                                                  MyTheme.buttonsRadius,
+                                            ),
+                                            child: TextAttributeWidget(
                                               attributeModel: e,
+                                              isArabic: isArabic ?? true,
+                                              isDeleted: controller
+                                                  .deletedAttributes
+                                                  .contains(e),
+                                              deleteAction: () => controller
+                                                  .addToAttributesToDelete(
+                                                attributeModel: e,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )
-                                      .toList(),
+                                        )
+                                        .toList(),
+                                  ),
                                 )),
                             TextWidget(
                               text: 'المواصفات الجديدة:',
@@ -130,70 +138,6 @@ class EditTextAttributesScreen extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(height: 5),
-                                  ...controller.textAttributes
-                                      .map(
-                                        (textAttribute) => Container(
-                                          margin: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            color: MyTheme.blackColor,
-                                            borderRadius: MyTheme.buttonsRadius,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              ProductTextAttribute(
-                                                addValueAction: () => controller
-                                                    .addTextAttributeValue(
-                                                  attributeHashCode:
-                                                      textAttribute.hashCode,
-                                                ),
-                                                deleteAction: () => controller
-                                                    .deleteTextAttribute(
-                                                        textAttribute),
-                                                nameAr:
-                                                    textAttribute['nameAr']!,
-                                                nameEn:
-                                                    textAttribute['nameEn']!,
-                                              ),
-                                              ...(controller.textAttributesValues[
-                                                          textAttribute
-                                                              .hashCode] ??
-                                                      [])
-                                                  .map(
-                                                    (textAttributeValue) =>
-                                                        ProductTextAttributeValue(
-                                                      nameArController:
-                                                          textAttributeValue[
-                                                              'valueAr'],
-                                                      nameEnController:
-                                                          textAttributeValue[
-                                                              "valueEn"],
-                                                      chooseImageAction: () =>
-                                                          controller
-                                                              .chooseImageForTextAttribute(
-                                                        attributeHashCode:
-                                                            textAttribute
-                                                                .hashCode,
-                                                        attributeValueHashCode:
-                                                            textAttributeValue
-                                                                .hashCode,
-                                                      ),
-                                                      image: textAttributeValue[
-                                                          "imageByte"],
-                                                      deleteAction: () => controller
-                                                          .deleteTextAttributeValue(
-                                                              data:
-                                                                  textAttributeValue,
-                                                              attributeHashCode:
-                                                                  textAttribute
-                                                                      .hashCode),
-                                                    ),
-                                                  )
-                                                  .toList()
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                      .toList()
                                 ],
                               ),
                             )

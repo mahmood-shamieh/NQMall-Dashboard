@@ -7,6 +7,7 @@ import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
+import 'package:nq_mall_dashboard/models/value_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 import "package:dio/dio.dart" as dioPackage;
 
@@ -18,13 +19,15 @@ import '../../shared/file_utility.dart';
 
 // import 'package:http/http.dart' as http;
 
-class AddTextAttributeApi {
+class EditTextAttributeTextValueApi {
   Future<ResponseModel> callApi({
-    required ProductModel productModel,
     required AttributeModel attributeModel,
+    required ValueModel valueModel,
+    Uint8List? hoverImageAr,
+    Uint8List? hoverImageEn,
   }) async {
     ApiHundler apiHundler = ApiHundler();
-    apiHundler.setEndPoint('/attributes/create');
+    apiHundler.setEndPoint('/attributesValues/edit');
     // apiHundler.setToken(userModel.token!);
 
     // List<dioPackage.MultipartFile> filesAr = [];
@@ -44,22 +47,49 @@ class AddTextAttributeApi {
     //   ));
     // }
 
-    // dioPackage.FormData data = dioPackage.FormData.fromMap(
-    // );
-    Map<String, String> data = {
-      "NameAr": attributeModel.NameAr ?? '',
-      "NameEn": attributeModel.NameEn ?? '',
-      "productId": productModel.Id.toString(),
-      "Type": attributeModel.Type ?? 'list',
-      "IsActive": true.toString(),
-    };
-    var response = await apiHundler.post(
-      body: json.encode(data),
+    dioPackage.FormData data = dioPackage.FormData.fromMap({
+      "ValueAr": valueModel.ValueAr ?? '',
+      "ValueEn": valueModel.ValueEn ?? '',
+      "Id": valueModel.Id ?? '',
+      "attributeId": attributeModel.Id.toString(),
+    });
+    // print(hoverImageAr);
+    // print(hoverImageEn);
+    if (hoverImageAr != null) {
+      data.files.add(
+        MapEntry(
+          'HoverImageAr',
+          dioPackage.MultipartFile.fromBytes(
+            hoverImageAr,
+            filename: DateTime.now().toString() +
+                FileUtility.checkFiletype(
+                  file: hoverImageAr,
+                ),
+          ),
+        ),
+      );
+    }
+    if (hoverImageEn != null) {
+      data.files.add(
+        MapEntry(
+          'HoverImageEn',
+          dioPackage.MultipartFile.fromBytes(
+            hoverImageEn,
+            filename: DateTime.now().toString() +
+                FileUtility.checkFiletype(
+                  file: hoverImageEn,
+                ),
+          ),
+        ),
+      );
+    }
+    var response = await apiHundler.postMultiPartDate1(
+      body: data,
     );
 
-    Map<String, dynamic> encodedResponse = json.decode(response.body);
-
-    ResponseModel responseModel = ResponseModel.fromMap(encodedResponse);
+    // Map<String, dynamic> encodedResponse = json.decode(response.body);
+    // print(response.body);
+    ResponseModel responseModel = ResponseModel.fromMap(response);
 
     return Future.delayed(Duration.zero, () => responseModel);
   }

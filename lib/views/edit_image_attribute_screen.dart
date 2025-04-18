@@ -17,8 +17,12 @@ import '../models/attribute_model.dart';
 class EditImageAttributeScreen extends StatelessWidget {
   ProductModel productModel;
   List<AttributeModel> attributes;
+  bool? isArabic;
   EditImageAttributeScreen(
-      {super.key, required this.attributes, required this.productModel});
+      {super.key,
+      required this.attributes,
+      required this.productModel,
+      this.isArabic});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class EditImageAttributeScreen extends StatelessWidget {
       init: Get.put(
           EditImageAttributeScreenController(currentAttributes: attributes)),
       builder: (controller) => Directionality(
-        textDirection: currentDirection,
+        textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBarWidget(
             showBackButton: true,
@@ -59,31 +63,35 @@ class EditImageAttributeScreen extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(vertical: 5),
                               decoration:
                                   BoxDecoration(color: MyTheme.appBarColor),
-                              child: Column(
-                                children: controller.currentAttributes
-                                    .map(
-                                      (e) => Container(
-                                        padding: const EdgeInsets.all(4),
-                                        margin: const EdgeInsets.symmetric(
-                                          vertical: 5,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: MyTheme.blackColor,
-                                          borderRadius: MyTheme.buttonsRadius,
-                                        ),
-                                        child: ImageAttributeWidget(
-                                          attributeModel: e,
-                                          isArabic: true,
-                                          isDeleted: controller.deletedAttribute
-                                              .contains(e),
-                                          deleteAction: () => controller
-                                              .addToAttributesToDelete(
+                              child: Directionality(
+                                textDirection: currentDirection,
+                                child: Column(
+                                  children: controller.currentAttributes
+                                      .map(
+                                        (e) => Container(
+                                          padding: const EdgeInsets.all(4),
+                                          margin: const EdgeInsets.symmetric(
+                                            vertical: 5,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: MyTheme.blackColor,
+                                            borderRadius: MyTheme.buttonsRadius,
+                                          ),
+                                          child: ImageAttributeWidget(
                                             attributeModel: e,
+                                            isArabic: isArabic ?? true,
+                                            isDeleted: controller
+                                                .deletedAttribute
+                                                .contains(e),
+                                            deleteAction: () => controller
+                                                .addToAttributesToDelete(
+                                              attributeModel: e,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                    .toList(),
+                                      )
+                                      .toList(),
+                                ),
                               ),
                             ),
                             TextWidget(
@@ -92,128 +100,6 @@ class EditImageAttributeScreen extends StatelessWidget {
                               fontSize: 16,
                               textAlign: TextAlign.start,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: MyTheme.appBarColor,
-                                borderRadius: MyTheme.buttonsRadius,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 5),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TextWidget(
-                                        text: "تفاصيل المنتج ( مع صور )",
-                                        textAlign: TextAlign.start,
-                                      ),
-                                      MyButton(
-                                        text: "إضافة",
-                                        action: () =>
-                                            controller.addImageAttribute(),
-                                        buttonColor: MyTheme.blueColor,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 4),
-                                        margin: const EdgeInsets.symmetric(
-                                          vertical: 4,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  ...controller.imageAttributes
-                                      .map(
-                                        (imageAttribute) => Container(
-                                          margin: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            color: MyTheme.blackColor,
-                                            borderRadius: MyTheme.buttonsRadius,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              ProductImageAttribute(
-                                                addValueAction: () => controller
-                                                    .addImageAttributeValue(
-                                                  attributeHashCode:
-                                                      imageAttribute.hashCode,
-                                                ),
-                                                deleteAction: () => controller
-                                                    .deleteImageAttribute(
-                                                        imageAttribute),
-                                                nameAr:
-                                                    imageAttribute['nameAr']!,
-                                                nameEn:
-                                                    imageAttribute['nameEn']!,
-                                              ),
-                                              ...(controller.imageAttributesValues[
-                                                          imageAttribute
-                                                              .hashCode] ??
-                                                      [])
-                                                  .map(
-                                                    (imageAttributeValue) =>
-                                                        ProductImageAttributeValue(
-                                                      imageAr:
-                                                          imageAttributeValue[
-                                                              'imageByteAr'],
-                                                      imageEn:
-                                                          imageAttributeValue[
-                                                              "imageByteEn"],
-                                                      chooseImageAction: () =>
-                                                          controller
-                                                              .chooseImageForImageAttribute(
-                                                        key: "imageByte",
-                                                        attributeHashCode:
-                                                            imageAttribute
-                                                                .hashCode,
-                                                        attributeValueHashCode:
-                                                            imageAttributeValue
-                                                                .hashCode,
-                                                      ),
-                                                      chooseImageActionEn: () =>
-                                                          controller
-                                                              .chooseImageForImageAttribute(
-                                                        key: "imageByteEn",
-                                                        attributeHashCode:
-                                                            imageAttribute
-                                                                .hashCode,
-                                                        attributeValueHashCode:
-                                                            imageAttributeValue
-                                                                .hashCode,
-                                                      ),
-                                                      chooseImageActionAr: () =>
-                                                          controller
-                                                              .chooseImageForImageAttribute(
-                                                        key: "imageByteAr",
-                                                        attributeHashCode:
-                                                            imageAttribute
-                                                                .hashCode,
-                                                        attributeValueHashCode:
-                                                            imageAttributeValue
-                                                                .hashCode,
-                                                      ),
-                                                      image:
-                                                          imageAttributeValue[
-                                                              "imageByte"],
-                                                      deleteAction: () => controller
-                                                          .deleteImageAttributeValue(
-                                                              data:
-                                                                  imageAttributeValue,
-                                                              attributeHashCode:
-                                                                  imageAttribute
-                                                                      .hashCode),
-                                                    ),
-                                                  )
-                                                  .toList()
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                      .toList()
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),

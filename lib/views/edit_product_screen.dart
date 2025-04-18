@@ -15,6 +15,7 @@ import 'package:nq_mall_dashboard/models/image_attribute_Widget.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/shared/string_utility.dart';
 import 'package:nq_mall_dashboard/views/edit_image_attribute_screen.dart';
+import 'package:nq_mall_dashboard/views/edit_product_attributes_screen.dart';
 import 'package:nq_mall_dashboard/views/edit_text_attributes_scree.dart';
 import 'package:nq_mall_dashboard/views/style_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,15 +40,6 @@ class EditProductScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBarWidget(
             showBackButton: true,
-            actions: [
-              IconButton(
-                onPressed: () => controller.changeViewLanguages(),
-                icon: FaIcon(
-                  FontAwesomeIcons.language,
-                  color: MyTheme.iconColor,
-                ),
-              )
-            ],
           ),
           backgroundColor: MyTheme.blackColor,
           body: controller.loadDetails.value
@@ -57,6 +49,102 @@ class EditProductScreen extends StatelessWidget {
               : SingleChildScrollView(
                   child: ListBody(
                     children: [
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: MyTheme.iconColor,
+                            width: 0.4,
+                          ),
+                          borderRadius: MyTheme.buttonsRadius,
+                        ),
+                        margin: const EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () =>
+                                  controller.changeViewLanguages(lang: "ar"),
+                              child: Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 9,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft:
+                                        controller.currentLanguages.value ==
+                                                'ar'
+                                            ? Radius.circular(6)
+                                            : Radius.circular(0),
+                                    topLeft:
+                                        controller.currentLanguages.value ==
+                                                'ar'
+                                            ? Radius.circular(6)
+                                            : Radius.circular(0),
+                                    bottomRight:
+                                        controller.currentLanguages.value ==
+                                                'ar'
+                                            ? Radius.circular(0)
+                                            : Radius.circular(6),
+                                    topRight:
+                                        controller.currentLanguages.value ==
+                                                'ar'
+                                            ? Radius.circular(0)
+                                            : Radius.circular(6),
+                                  ),
+                                  color:
+                                      controller.currentLanguages.value == 'ar'
+                                          ? MyTheme.blueColor
+                                          : MyTheme.appBarColor,
+                                ),
+                                child: Center(child: TextWidget(text: "عربي")),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () =>
+                                  controller.changeViewLanguages(lang: "en"),
+                              child: Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 9,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft:
+                                        controller.currentLanguages.value !=
+                                                'ar'
+                                            ? Radius.circular(6)
+                                            : Radius.circular(0),
+                                    topLeft:
+                                        controller.currentLanguages.value !=
+                                                'ar'
+                                            ? Radius.circular(6)
+                                            : Radius.circular(0),
+                                    bottomRight:
+                                        controller.currentLanguages.value !=
+                                                'ar'
+                                            ? Radius.circular(0)
+                                            : Radius.circular(6),
+                                    topRight:
+                                        controller.currentLanguages.value !=
+                                                'ar'
+                                            ? Radius.circular(0)
+                                            : Radius.circular(6),
+                                  ),
+                                  color:
+                                      controller.currentLanguages.value != 'ar'
+                                          ? MyTheme.blueColor
+                                          : MyTheme.appBarColor,
+                                ),
+                                child:
+                                    Center(child: TextWidget(text: "English")),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       CarouselSlider(
                         options: CarouselOptions(height: 300.0),
                         items: productModel.media!.map((i) {
@@ -222,32 +310,79 @@ class EditProductScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
-                            ...controller.attributes
-                                .where((element) => element.Type == 'images')
-                                .map(
-                                  (e) => ImageAttributeWidget(
-                                    attributeModel: e,
-                                    isArabic:
-                                        controller.currentLanguages.value ==
-                                            'ar',
-                                  ),
-                                )
-                                .toList(),
-                            const SizedBox(
-                              height: elementSpacing,
-                            ),
 
                             ...controller.attributes
-                                .where((element) => element.Type == 'items')
+                                // .where((element) => element.Type == 'items')
                                 .map(
-                                  (e) => TextAttributeWidget(
-                                    attributeModel: e,
-                                    isArabic:
-                                        controller.currentLanguages.value ==
-                                            "ar",
-                                  ),
-                                )
-                                .toList(),
+                              (e) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // TextAttributeWidget(
+                                    //   attributeModel: e,
+                                    //   isArabic:
+                                    //       controller.currentLanguages.value ==
+                                    //           "ar",
+                                    // ),
+                                    TextWidget(
+                                      text:
+                                          '${(controller.currentLanguages.value == "ar" ? e.NameAr : e.NameEn).toString()} :',
+                                      textAlign: TextAlign.start,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: (e.values ?? [])
+                                            .map((value) => Container(
+                                                  height: 40,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2),
+                                                  margin:
+                                                      const EdgeInsetsDirectional
+                                                          .only(end: 4),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: MyTheme
+                                                              .borderColor),
+                                                      borderRadius: MyTheme
+                                                          .buttonsRadius),
+                                                  child: e.Type.toString()
+                                                              .toLowerCase() ==
+                                                          'images'
+                                                      ? Image(
+                                                          image: NetworkImage(
+                                                              "${Constants.mediaUrl}/${(controller.currentLanguages.value == "ar" ? value.ValueAr : value.ValueEn).toString().toUrl()}"),
+                                                        )
+                                                      : TextWidget(
+                                                          text: (controller
+                                                                          .currentLanguages
+                                                                          .value ==
+                                                                      "ar"
+                                                                  ? value
+                                                                      .ValueAr
+                                                                  : value
+                                                                      .ValueEn)
+                                                              .toString()),
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ).toList(),
                             const SizedBox(
                               height: elementSpacing,
                             ),
@@ -284,51 +419,65 @@ class EditProductScreen extends StatelessWidget {
                                   ),
                                 )
                                 .toList(),
+                            // const SizedBox(
+                            //   height: elementSpacing,
+                            // ),
+                            // MyButton(
+                            //   action: () => Get.to(
+                            //     () => EditImageAttributeScreen(
+                            //         isArabic:
+                            //             controller.currentLanguages.value ==
+                            //                     'ar'
+                            //                 ? true
+                            //                 : false,
+                            //         attributes: controller.attributes
+                            //             .where((element) =>
+                            //                 element.Type == "images")
+                            //             .toList(),
+                            //         productModel: controller.productModel),
+                            //   ),
+                            //   text:
+                            //       //  controller.currentLanguages.value == "ar"
+                            //       //     ?
+                            //       "تعديل واصفات الصور"
+                            //           // : "edit Image Attributes"
+                            //           .capitalizeFirstChar(),
+                            //   buttonColor: MyTheme.blueColor,
+                            // ),
+                            // const SizedBox(
+                            //   height: elementSpacing,
+                            // ),
+                            // MyButton(
+                            //   action: () => Get.to(
+                            //     () => EditTextAttributesScreen(
+                            //       isArabic:
+                            //           controller.currentLanguages.value == 'ar'
+                            //               ? true
+                            //               : false,
+                            //       productModel: controller.productModel,
+                            //       attributes: controller.attributes
+                            //           .where(
+                            //               (element) => element.Type == 'items')
+                            //           .toList(),
+                            //     ),
+                            //   ),
+                            //   text:
+                            //       // controller.currentLanguages.value == "ar"
+                            //       // ?
+                            //       "تعديل واصفات الكتابة"
+                            //   // : "Edit Text Attributes"
+                            //   ,
+                            //   buttonColor: MyTheme.blueColor,
+                            // ),
                             const SizedBox(
                               height: elementSpacing,
                             ),
                             MyButton(
                               action: () => Get.to(
-                                () => EditImageAttributeScreen(
-                                    attributes: controller.attributes
-                                        .where((element) =>
-                                            element.Type == "images")
-                                        .toList(),
-                                    productModel: controller.productModel),
-                              ),
-                              text:
-                                  //  controller.currentLanguages.value == "ar"
-                                  //     ?
-                                  "تعديل واصفات الصور"
-                                      // : "edit Image Attributes"
-                                      .capitalizeFirstChar(),
-                              buttonColor: MyTheme.blueColor,
-                            ),
-                            const SizedBox(
-                              height: elementSpacing,
-                            ),
-                            MyButton(
-                              action: () => Get.to(
-                                () => EditTextAttributesScreen(
+                                () => EditProductAttributesScreen(
                                   productModel: controller.productModel,
-                                  attributes: controller.attributes
-                                      .where(
-                                          (element) => element.Type == 'items')
-                                      .toList(),
                                 ),
                               ),
-                              text:
-                                  // controller.currentLanguages.value == "ar"
-                                  // ?
-                                  "تعديل واصفات الكتابة"
-                              // : "Edit Text Attributes"
-                              ,
-                              buttonColor: MyTheme.blueColor,
-                            ),
-                            const SizedBox(
-                              height: elementSpacing,
-                            ),
-                            MyButton(
                               text:
                                   //  controller.currentLanguages.value == "ar" ?
                                   "تعديل مواصفات المنتج"

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:nq_mall_dashboard/models/attribute_content_model.dart';
+import 'package:nq_mall_dashboard/models/value_model.dart';
 
 class AttributeModel {
   int? Id;
@@ -15,6 +16,7 @@ class AttributeModel {
   List<AttributeContentModel>? ContentEn;
   DateTime? UpdatedAt;
   DateTime? CreatedAt;
+  List<ValueModel>? values;
   AttributeModel({
     this.Id,
     this.NameAr,
@@ -26,6 +28,7 @@ class AttributeModel {
     this.ContentEn,
     this.UpdatedAt,
     this.CreatedAt,
+    this.values,
   });
 
   AttributeModel copyWith({
@@ -39,6 +42,7 @@ class AttributeModel {
     List<AttributeContentModel>? ContentEn,
     DateTime? UpdatedAt,
     DateTime? CreatedAt,
+    List<ValueModel>? values,
   }) {
     return AttributeModel(
       Id: Id ?? this.Id,
@@ -51,6 +55,7 @@ class AttributeModel {
       ContentEn: ContentEn ?? this.ContentEn,
       UpdatedAt: UpdatedAt ?? this.UpdatedAt,
       CreatedAt: CreatedAt ?? this.CreatedAt,
+      values: values ?? this.values,
     );
   }
 
@@ -66,6 +71,7 @@ class AttributeModel {
       'ContentEn': ContentEn?.map((x) => x?.toMap())?.toList(),
       'UpdatedAt': UpdatedAt?.toString(),
       'CreatedAt': CreatedAt?.toString(),
+      'values': values?.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -84,6 +90,10 @@ class AttributeModel {
       ContentEn: map['ContentEn'] != null
           ? List<AttributeContentModel>.from(
               map['ContentEn']?.map((x) => AttributeContentModel.fromMap(x)))
+          : null,
+      values: map['values'] != null
+          ? List<ValueModel>.from(
+              map['values']?.map((x) => ValueModel.fromMap(x)))
           : null,
       UpdatedAt:
           map['UpdatedAt'] != null ? DateTime.parse(map['UpdatedAt']) : null,

@@ -11,7 +11,7 @@ import '../../models/response_model.dart';
 import '../../shared/api_hundler.dart';
 import 'package:http/http.dart' as http;
 
-import '../../shared/fike_utility.dart';
+import '../../shared/file_utility.dart';
 
 // import 'package:http/http.dart' as http;
 

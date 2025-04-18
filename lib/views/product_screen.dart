@@ -12,6 +12,8 @@ import 'package:nq_mall_dashboard/shared/theme.dart';
 import 'package:nq_mall_dashboard/views/add_product_screen.dart';
 import 'package:nq_mall_dashboard/views/edit_brand_screen.dart';
 import 'package:nq_mall_dashboard/views/edit_product_screen.dart';
+import 'package:nq_mall_dashboard/views/product_attributes_screen.dart';
+import 'package:nq_mall_dashboard/views/product_pricing_screen.dart';
 
 import '../components/dialog_box.dart';
 import '../components/text_field_widget.dart';
@@ -142,6 +144,66 @@ class ProductScreen extends StatelessWidget {
                                                     itemBuilder:
                                                         (BuildContext context) {
                                                       return [
+                                                        PopupMenuItem<String>(
+                                                          value: "تسعير المنتج",
+                                                          child: InkWell(
+                                                            onTap: () => Get.to(
+                                                              () =>
+                                                                  ProductPricingScreen(
+                                                                productModel: e,
+                                                              ),
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                TextWidget(
+                                                                  text:
+                                                                      "تسعير المنتج",
+                                                                  color: MyTheme
+                                                                      .blackColor,
+                                                                ),
+                                                                Icon(
+                                                                  Icons
+                                                                      .price_change,
+                                                                  color: MyTheme
+                                                                      .blackColor,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        PopupMenuItem<String>(
+                                                          value: "تعديل",
+                                                          child: InkWell(
+                                                            onTap: () => Get.to(
+                                                              () =>
+                                                                  ProductAttributesScreen(
+                                                                productModel: e,
+                                                              ),
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                TextWidget(
+                                                                  text:
+                                                                      "واصفات المنتج",
+                                                                  color: MyTheme
+                                                                      .blackColor,
+                                                                ),
+                                                                Icon(
+                                                                  Icons
+                                                                      .description,
+                                                                  color: MyTheme
+                                                                      .blackColor,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
                                                         PopupMenuItem<String>(
                                                           value: "تعديل",
                                                           child: InkWell(

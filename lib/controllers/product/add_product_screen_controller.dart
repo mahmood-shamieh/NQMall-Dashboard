@@ -8,7 +8,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:nq_mall_dashboard/apis/attributes/add_image_attribute_api.dart';
 import 'package:nq_mall_dashboard/apis/attributes/add_text_attribute_api.dart';
 import 'package:nq_mall_dashboard/apis/brand/get_all_brands_no_pagination.dart';
 import 'package:nq_mall_dashboard/apis/category/get_all_categories_no_pagination.dart';
@@ -32,7 +31,8 @@ class AddProductScreenController extends GetxController {
   List<BrandModel>? brands;
   Rx<CategoryModel>? selectedCategory;
   Rx<BrandModel>? selectedBrand;
-  List<Map<String, TextEditingController>> attributes = [];
+  List<Map<String, TextEditingController>> attributesAr = [];
+  List<Map<String, TextEditingController>> attributesEn = [];
   List<Map<String, TextEditingController>> textAttributes = [];
   List<Map<String, TextEditingController>> imageAttributes = [];
   Map<int, List<Map<String, dynamic>>> textAttributesValues = {};
@@ -47,7 +47,7 @@ class AddProductScreenController extends GetxController {
   TextEditingController salePrice = TextEditingController();
   @override
   void onInit() async {
-    // fillfileds();
+    fillfileds();
     await loadBrands();
     await loadCategories();
     selectedBrand = Rx(brands!.first);
@@ -63,18 +63,59 @@ class AddProductScreenController extends GetxController {
     descEn.text = "descEn";
     price.text = 123.toString();
     salePrice.text = 321.toString();
-    for (var element in [1, 2]) {
+    // for (var element in [1, 2])
+    {
       Map<String, TextEditingController> data = {
-        "nameAr": TextEditingController(),
-        "valueAr": TextEditingController(),
-        "nameEn": TextEditingController(),
-        "valueEn": TextEditingController(),
+        "name": TextEditingController(),
+        "value": TextEditingController(),
       };
-      data['nameAr']!.text = "nameAr" + element.toString();
-      data['valueAr']!.text = "valueAr" + element.toString();
-      data['nameEn']!.text = "nameEn" + element.toString();
-      data['valueEn']!.text = "valueEn" + element.toString();
-      attributes.add(data);
+      data['name']!.text = "الشبكة";
+      data['value']!.text = "فايف جي";
+      attributesAr.add(data);
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+
+      data['name']!.text = "الشركة";
+      data['value']!.text = "سامسونج";
+      attributesAr.add(data);
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+      data['name']!.text = "الشحن";
+      data['value']!.text = "سريع";
+      attributesAr.add(data);
+
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+      data['name']!.text = "charge";
+      data['value']!.text = 'fast';
+      attributesEn.add(data);
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+      data['name']!.text = "brand";
+      data['value']!.text = 'samsung';
+      attributesEn.add(data);
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+      data['name']!.text = "network";
+      data['value']!.text = '5G';
+      attributesEn.add(data);
+      data = {
+        "name": TextEditingController(),
+        "value": TextEditingController(),
+      };
+      data['name']!.text = "wireless charging";
+      data['value']!.text = 'Yes';
+      attributesEn.add(data);
     }
     final ByteData data = await rootBundle.load(
         "assets/images/DALL·E 2024-04-24 15.19.36 - A creative brand logo for a fictional pet store called 'Paw Paradise'. The logo features a playful depiction of a dog's paw print, with each pad shape.webp");
@@ -237,14 +278,21 @@ class AddProductScreenController extends GetxController {
     update();
   }
 
-  void addAttribute() {
+  void addAttributeAr() {
     Map<String, TextEditingController> data = {
-      "nameAr": TextEditingController(),
-      "valueAr": TextEditingController(),
-      "nameEn": TextEditingController(),
-      "valueEn": TextEditingController(),
+      "name": TextEditingController(),
+      "value": TextEditingController(),
     };
-    attributes.add(data);
+    attributesAr.add(data);
+    update();
+  }
+
+  void addAttributeEn() {
+    Map<String, TextEditingController> data = {
+      "name": TextEditingController(),
+      "value": TextEditingController(),
+    };
+    attributesEn.add(data);
     update();
   }
 
@@ -294,8 +342,14 @@ class AddProductScreenController extends GetxController {
     update();
   }
 
-  void deleteAttribute(Map<String, TextEditingController> data) {
-    attributes.remove(data);
+  void deleteAttributeAr(Map<String, TextEditingController> data) {
+    attributesAr.remove(data);
+
+    update();
+  }
+
+  void deleteAttributeEn(Map<String, TextEditingController> data) {
+    attributesEn.remove(data);
 
     update();
   }
@@ -385,19 +439,28 @@ class AddProductScreenController extends GetxController {
   }
 
   void submit() async {
-    Map<String, String> descriptionAr = {};
-    attributes.forEach((element) {
-      print(element);
-    });
-    for (var element in attributes) {
-      descriptionAr[element['nameAr']!.text.trim()] =
-          element['valueAr']!.text.trim();
+    Map<String, String> detailsAr = {};
+    Map<String, String> detailsEn = {};
+    // attributes.forEach((element) {
+    //   print(element);
+    // });
+    for (var i = 0; i < attributesAr.length; i++) {
+      detailsAr[attributesAr[i]['name']!.text.trim()] =
+          attributesAr[i]['value']!.text.trim();
     }
-    Map<String, String> descriptionEn = {};
-    for (var element in attributes) {
-      descriptionEn[element['nameEn']!.text.trim()] =
-          element['valueEn']!.text.trim();
+    for (var i = 0; i < attributesEn.length; i++) {
+      detailsEn[attributesEn[i]['name']!.text.trim()] =
+          attributesEn[i]['value']!.text.trim();
     }
+    // for (var element in attributes) {
+    //   descriptionAr[element['nameAr']!.text.trim()] =
+    //       element['valueAr']!.text.trim();
+    // }
+
+    // for (var element in attributes) {
+    //   descriptionEn[element['nameEn']!.text.trim()] =
+    //       element['valueEn']!.text.trim();
+    // }
     ProductModel productModel = ProductModel(
       NameAr: nameAr.text.trim(),
       NameEn: nameEn.text.trim(),
@@ -405,8 +468,8 @@ class AddProductScreenController extends GetxController {
       DescriptionEn: descEn.text.trim(),
       Price: int.parse(price.text.trim()),
       SalePrice: int.parse(salePrice.text.trim()),
-      DetailsAr: descriptionAr,
-      DetailsEn: descriptionEn,
+      DetailsAr: detailsAr,
+      DetailsEn: detailsEn,
       userId: 1,
       IsActive: true,
       categoryId: selectedCategory?.value.Id,
@@ -461,10 +524,6 @@ class AddProductScreenController extends GetxController {
               NameEn: element['nameAr']!.text.trim(),
               IsActive: true,
             ),
-            itemsAr: itemsAr,
-            itemsEn: itemsEn,
-            mediaAr: mediaAr,
-            mediaEn: mediaEn,
           );
           // });
         });
@@ -477,18 +536,18 @@ class AddProductScreenController extends GetxController {
           mediaAr.add(element["imageByte"] ?? loadPlaceHolderFile());
           mediaEn.add(element["imageByte"] ?? loadPlaceHolderFile());
         });
-        ResponseModel uploadImageAttributesResponse =
-            await AddImageAttributeApi().callApi(
-          productModel: productModel,
-          attributeModel: AttributeModel(
-            NameAr: element['nameAr']!.text.trim(),
-            NameEn: element['nameEn']!.text.trim(),
-          ),
-          itemsAr: itemsAr,
-          itemsEn: itemsEn,
-          mediaAr: mediaAr,
-          mediaEn: mediaEn,
-        );
+        // ResponseModel uploadImageAttributesResponse =
+        //     await AddImageAttributeApi().callApi(
+        //   productModel: productModel,
+        //   attributeModel: AttributeModel(
+        //     NameAr: element['nameAr']!.text.trim(),
+        //     NameEn: element['nameEn']!.text.trim(),
+        //   ),
+        //   itemsAr: itemsAr,
+        //   itemsEn: itemsEn,
+        //   mediaAr: mediaAr,
+        //   mediaEn: mediaEn,
+        // );
       });
       uploadProductDetails(false);
       update();

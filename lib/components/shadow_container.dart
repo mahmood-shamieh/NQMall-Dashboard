@@ -4,12 +4,14 @@ import '../shared/theme.dart';
 
 class ShadowContainer extends StatelessWidget {
   final Widget? widget;
-  const ShadowContainer({super.key, this.widget});
+  final double? width, height;
+  const ShadowContainer({super.key, this.widget, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width ?? MediaQuery.of(context).size.width,
+      height: height,
       margin: MyTheme.margin,
       padding: MyTheme.padding,
       alignment: AlignmentDirectional.center,

@@ -120,11 +120,9 @@ class ApiHundler {
     // }
   }
 
-  postMultiPartDate1(
-      {required dioPackage.FormData body,
-      List<dioPackage.MultipartFile>? files,
-      String? method,
-      Map<String, dynamic>? arrayData}) async {
+  postMultiPartDate1({
+    required dioPackage.FormData body,
+  }) async {
     // try {
     dioPackage.Dio dio = dioPackage.Dio();
     dioPackage.Response response = await dio.post(

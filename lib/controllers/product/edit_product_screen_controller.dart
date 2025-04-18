@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -29,6 +28,7 @@ class EditProductScreenController extends GetxController {
   EditProductScreenController({required this.productModel});
   @override
   void onInit() async {
+    // print(productModel);
     fillFields();
     await loadMedia();
     await loadAttributes();
@@ -87,13 +87,12 @@ class EditProductScreenController extends GetxController {
     update();
   }
 
-  changeViewLanguages() {
+  changeViewLanguages({required String lang}) {
+    currentLanguages(lang);
     if (currentLanguages.value == 'ar') {
-      currentLanguages('en');
-      currentDirection = TextDirection.ltr;
-    } else {
-      currentLanguages('ar');
       currentDirection = TextDirection.rtl;
+    } else {
+      currentDirection = TextDirection.ltr;
     }
     update();
   }

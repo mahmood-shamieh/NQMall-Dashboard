@@ -6,7 +6,6 @@ class StyleWidgetController extends GetxController {
 
   void changePage({required currentPage}) {
     this.currentPage(currentPage);
-    print(currentPage);
     update();
   }
 }

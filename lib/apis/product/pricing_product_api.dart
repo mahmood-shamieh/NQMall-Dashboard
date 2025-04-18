@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
-import 'package:nq_mall_dashboard/models/media_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 import "package:dio/dio.dart" as dioPackage;
@@ -19,15 +18,16 @@ import '../../shared/file_utility.dart';
 
 // import 'package:http/http.dart' as http;
 
-class DeleteMediaApi {
+class PricingProductApi {
   Future<ResponseModel> callApi({
-    required MediaModel mediaModel,
+    required List<Map> variationsWithValues,
   }) async {
     ApiHundler apiHundler = ApiHundler();
-    apiHundler.setEndPoint('/media/delete/${mediaModel.Id}');
+    apiHundler.setEndPoint('/variationsLinks/create');
     // apiHundler.setToken(userModel.token!);
 
-    var response = await apiHundler.delete();
+    var response =
+        await apiHundler.post(body: json.encode(variationsWithValues));
 
     // print(response.runtimeType);
 

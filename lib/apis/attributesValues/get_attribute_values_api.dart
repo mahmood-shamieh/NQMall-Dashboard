@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
-import 'package:nq_mall_dashboard/models/media_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 import "package:dio/dio.dart" as dioPackage;
@@ -19,15 +18,16 @@ import '../../shared/file_utility.dart';
 
 // import 'package:http/http.dart' as http;
 
-class DeleteMediaApi {
+class GetAttributeValuesApi {
   Future<ResponseModel> callApi({
-    required MediaModel mediaModel,
+    required AttributeModel attributeModel,
   }) async {
     ApiHundler apiHundler = ApiHundler();
-    apiHundler.setEndPoint('/media/delete/${mediaModel.Id}');
+    apiHundler.setEndPoint(
+        '/attributesValues/getAttributeValues/${attributeModel.Id}');
     // apiHundler.setToken(userModel.token!);
 
-    var response = await apiHundler.delete();
+    var response = await apiHundler.get();
 
     // print(response.runtimeType);
 

@@ -618,13 +618,13 @@ class AddProductScreen extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           const TextWidget(
-                                            text: "مواصفات المنتج",
+                                            text: "مواصفات المنتج بالعربي",
                                             textAlign: TextAlign.start,
                                           ),
                                           MyButton(
                                             text: "إضافة",
                                             action: () =>
-                                                controller.addAttribute(),
+                                                controller.addAttributeAr(),
                                             buttonColor: MyTheme.blueColor,
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 4),
@@ -635,7 +635,7 @@ class AddProductScreen extends StatelessWidget {
                                         ],
                                       ),
                                       const SizedBox(height: 5),
-                                      ...controller.attributes
+                                      ...controller.attributesAr
                                           .map(
                                             (e) => Container(
                                               margin: const EdgeInsets.only(
@@ -676,7 +676,8 @@ class AddProductScreen extends StatelessWidget {
                                                       ),
                                                       InkWell(
                                                         onTap: () => controller
-                                                            .deleteAttribute(e),
+                                                            .deleteAttributeAr(
+                                                                e),
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -694,28 +695,120 @@ class AddProductScreen extends StatelessWidget {
                                                     hintText:
                                                         "اسم الواصفة بالعربي",
                                                     margin: EdgeInsets.all(0),
-                                                    controller: e['nameAr'],
+                                                    controller: e['name'],
                                                   ),
                                                   TextFieldWidget(
                                                     hintText:
                                                         "قيمة الواصفة بالعربي",
                                                     margin: EdgeInsets.all(0),
-                                                    controller: e['valueAr'],
+                                                    controller: e['value'],
                                                   ),
-                                                  const SizedBox(
-                                                    height: 5,
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                          .toList()
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: MyTheme.appBarColor,
+                                    borderRadius: MyTheme.buttonsRadius,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 5),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const TextWidget(
+                                            text: "مواصفات المنتج بالإنكليزي",
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          MyButton(
+                                            text: "إضافة",
+                                            action: () =>
+                                                controller.addAttributeEn(),
+                                            buttonColor: MyTheme.blueColor,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 4),
+                                            margin: const EdgeInsets.symmetric(
+                                              vertical: 4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      ...controller.attributesEn
+                                          .map(
+                                            (e) => Container(
+                                              margin: const EdgeInsets.only(
+                                                bottom: 6,
+                                              ),
+                                              padding: const EdgeInsets.all(
+                                                8,
+                                              ),
+                                              width: double.infinity,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                color: MyTheme.blackColor,
+                                                // border: MyTheme.
+                                                borderRadius:
+                                                    MyTheme.buttonsRadius,
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          right: 6,
+                                                        ),
+                                                        child: TextWidget(
+                                                          text:
+                                                              "تفاصيل الواصفة",
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () => controller
+                                                            .deleteAttributeEn(
+                                                                e),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2.0),
+                                                          child: Icon(
+                                                            Icons.close,
+                                                            color: MyTheme
+                                                                .greyColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   TextFieldWidget(
                                                     hintText:
                                                         "اسم الواصفة بالإنجليزي",
                                                     margin: EdgeInsets.all(0),
-                                                    controller: e['nameEn'],
+                                                    controller: e['name'],
                                                   ),
                                                   TextFieldWidget(
                                                     hintText:
                                                         "قيمة الواصفة بالإنجليزي",
                                                     margin: EdgeInsets.all(0),
-                                                    controller: e['valueEn'],
+                                                    controller: e['value'],
                                                   ),
                                                 ],
                                               ),
@@ -759,205 +852,13 @@ class AddProductScreen extends StatelessWidget {
                                         ],
                                       ),
                                       const SizedBox(height: 5),
-                                      ...controller.textAttributes
-                                          .map(
-                                            (textAttribute) => Container(
-                                              margin: EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                color: MyTheme.blackColor,
-                                                borderRadius:
-                                                    MyTheme.buttonsRadius,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  ProductTextAttribute(
-                                                    addValueAction: () =>
-                                                        controller
-                                                            .addTextAttributeValue(
-                                                      attributeHashCode:
-                                                          textAttribute
-                                                              .hashCode,
-                                                    ),
-                                                    deleteAction: () =>
-                                                        controller
-                                                            .deleteTextAttribute(
-                                                                textAttribute),
-                                                    nameAr: textAttribute[
-                                                        'nameAr']!,
-                                                    nameEn: textAttribute[
-                                                        'nameEn']!,
-                                                  ),
-                                                  ...(controller.textAttributesValues[
-                                                              textAttribute
-                                                                  .hashCode] ??
-                                                          [])
-                                                      .map(
-                                                        (textAttributeValue) =>
-                                                            ProductTextAttributeValue(
-                                                          nameArController:
-                                                              textAttributeValue[
-                                                                  'valueAr'],
-                                                          nameEnController:
-                                                              textAttributeValue[
-                                                                  "valueEn"],
-                                                          chooseImageAction:
-                                                              () => controller
-                                                                  .chooseImageForTextAttribute(
-                                                            attributeHashCode:
-                                                                textAttribute
-                                                                    .hashCode,
-                                                            attributeValueHashCode:
-                                                                textAttributeValue
-                                                                    .hashCode,
-                                                          ),
-                                                          image:
-                                                              textAttributeValue[
-                                                                  "imageByte"],
-                                                          deleteAction: () => controller
-                                                              .deleteTextAttributeValue(
-                                                                  data:
-                                                                      textAttributeValue,
-                                                                  attributeHashCode:
-                                                                      textAttribute
-                                                                          .hashCode),
-                                                        ),
-                                                      )
-                                                      .toList()
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                          .toList()
                                     ],
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: MyTheme.appBarColor,
-                                    borderRadius: MyTheme.buttonsRadius,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 5),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const TextWidget(
-                                            text: "تفاصيل المنتج ( مع صور )",
-                                            textAlign: TextAlign.start,
-                                          ),
-                                          MyButton(
-                                            text: "إضافة",
-                                            action: () =>
-                                                controller.addImageAttribute(),
-                                            buttonColor: MyTheme.blueColor,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 4),
-                                            margin: const EdgeInsets.symmetric(
-                                              vertical: 4,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                      ...controller.imageAttributes
-                                          .map(
-                                            (imageAttribute) => Container(
-                                              margin: EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                color: MyTheme.blackColor,
-                                                borderRadius:
-                                                    MyTheme.buttonsRadius,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  ProductImageAttribute(
-                                                    addValueAction: () => controller
-                                                        .addImageAttributeValue(
-                                                      attributeHashCode:
-                                                          imageAttribute
-                                                              .hashCode,
-                                                    ),
-                                                    deleteAction: () => controller
-                                                        .deleteImageAttribute(
-                                                            imageAttribute),
-                                                    nameAr: imageAttribute[
-                                                        'nameAr']!,
-                                                    nameEn: imageAttribute[
-                                                        'nameEn']!,
-                                                  ),
-                                                  ...(controller.imageAttributesValues[
-                                                              imageAttribute
-                                                                  .hashCode] ??
-                                                          [])
-                                                      .map(
-                                                        (imageAttributeValue) =>
-                                                            ProductImageAttributeValue(
-                                                          imageAr:
-                                                              imageAttributeValue[
-                                                                  'imageByteAr'],
-                                                          imageEn:
-                                                              imageAttributeValue[
-                                                                  "imageByteEn"],
-                                                          chooseImageAction:
-                                                              () => controller
-                                                                  .chooseImageForImageAttribute(
-                                                            key: "imageByte",
-                                                            attributeHashCode:
-                                                                imageAttribute
-                                                                    .hashCode,
-                                                            attributeValueHashCode:
-                                                                imageAttributeValue
-                                                                    .hashCode,
-                                                          ),
-                                                          chooseImageActionEn:
-                                                              () => controller
-                                                                  .chooseImageForImageAttribute(
-                                                            key: "imageByteEn",
-                                                            attributeHashCode:
-                                                                imageAttribute
-                                                                    .hashCode,
-                                                            attributeValueHashCode:
-                                                                imageAttributeValue
-                                                                    .hashCode,
-                                                          ),
-                                                          chooseImageActionAr:
-                                                              () => controller
-                                                                  .chooseImageForImageAttribute(
-                                                            key: "imageByteAr",
-                                                            attributeHashCode:
-                                                                imageAttribute
-                                                                    .hashCode,
-                                                            attributeValueHashCode:
-                                                                imageAttributeValue
-                                                                    .hashCode,
-                                                          ),
-                                                          image:
-                                                              imageAttributeValue[
-                                                                  "imageByte"],
-                                                          deleteAction: () => controller
-                                                              .deleteImageAttributeValue(
-                                                                  data:
-                                                                      imageAttributeValue,
-                                                                  attributeHashCode:
-                                                                      imageAttribute
-                                                                          .hashCode),
-                                                        ),
-                                                      )
-                                                      .toList()
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                          .toList()
-                                    ],
-                                  ),
-                                ),
+                                
                                 MyButton(
                                   action: () => controller.submit(),
                                   buttonColor: MyTheme.blueColor,

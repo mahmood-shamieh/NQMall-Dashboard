@@ -18,13 +18,13 @@ import '../../shared/file_utility.dart';
 
 // import 'package:http/http.dart' as http;
 
-class AddTextAttributeApi {
+class EditTextAttributeApi {
   Future<ResponseModel> callApi({
     required ProductModel productModel,
     required AttributeModel attributeModel,
   }) async {
     ApiHundler apiHundler = ApiHundler();
-    apiHundler.setEndPoint('/attributes/create');
+    apiHundler.setEndPoint('/attributes/edit');
     // apiHundler.setToken(userModel.token!);
 
     // List<dioPackage.MultipartFile> filesAr = [];
@@ -52,13 +52,14 @@ class AddTextAttributeApi {
       "productId": productModel.Id.toString(),
       "Type": attributeModel.Type ?? 'list',
       "IsActive": true.toString(),
+      "Id": attributeModel.Id.toString(),
     };
     var response = await apiHundler.post(
       body: json.encode(data),
     );
 
     Map<String, dynamic> encodedResponse = json.decode(response.body);
-
+    // print(response.body);
     ResponseModel responseModel = ResponseModel.fromMap(encodedResponse);
 
     return Future.delayed(Duration.zero, () => responseModel);
