@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
+import 'package:nq_mall_dashboard/models/user_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 
 import '../../models/response_model.dart';
@@ -17,7 +19,8 @@ class UpdateBrandApi {
       {required BrandModel brandModel, File? image}) async {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/brands/update');
-    // apiHundler.setToken(userModel.token!);
+    apiHundler.setToken(getIt.get<UserModel>().Token!);
+
     http.MultipartFile? tempFile;
     if (image != null) {
       tempFile = await http.MultipartFile.fromPath(

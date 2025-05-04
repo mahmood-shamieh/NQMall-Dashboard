@@ -17,6 +17,12 @@ class DrawerPage extends StatelessWidget {
       builder: (controller) {
         List<Widget> tabs = [
           DrawerItem(
+            text: 'الملف الشخصي',
+            iconData: Icons.person,
+            selected: controller.currentPage.value == Pages.profile,
+            action: () => controller.changePage(currentPage: Pages.profile),
+          ),
+          DrawerItem(
             text: 'الأصناف',
             iconData: Icons.category,
             selected: controller.currentPage.value == Pages.category,

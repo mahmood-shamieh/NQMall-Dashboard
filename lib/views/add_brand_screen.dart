@@ -80,7 +80,7 @@ class AddBrandScreen extends StatelessWidget {
                                     ? Container()
                                     : MyButton(
                                         action: () => controller.chooseImage(),
-                                        width: 40,
+                                        width: 140,
                                         margin: EdgeInsets.only(bottom: 5),
                                         text: "تغيير الصورة",
                                         buttonColor: MyTheme.blueColor,

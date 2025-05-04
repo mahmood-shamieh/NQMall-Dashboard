@@ -38,18 +38,18 @@ class ProductPricingScreen extends StatelessWidget {
               ],
             ),
             backgroundColor: MyTheme.blackColor,
-            floatingActionButton: InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.only(left: 4),
-                decoration: BoxDecoration(
-                    color: MyTheme.blueColor, shape: BoxShape.circle),
-                child: Icon(
-                  Icons.add,
-                  color: MyTheme.textBlackColor,
-                ),
-              ),
-            ),
+            // floatingActionButton: InkWell(
+            //   child: Container(
+            //     padding: const EdgeInsets.all(14),
+            //     margin: const EdgeInsets.only(left: 4),
+            //     decoration: BoxDecoration(
+            //         color: MyTheme.blueColor, shape: BoxShape.circle),
+            //     child: Icon(
+            //       Icons.add,
+            //       color: MyTheme.textBlackColor,
+            //     ),
+            //   ),
+            // ),
             body: controller.loadDetails.value
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -202,10 +202,6 @@ class ProductPricingScreen extends StatelessWidget {
                                           ),
                                         ))
                                     .toList(),
-                                MyButton(
-                                  text: 'add',
-                                  action: () => controller.priceProduct(),
-                                ),
                                 const SizedBox(
                                   height: 140,
                                 ),
@@ -243,6 +239,17 @@ class ProductPricingScreen extends StatelessWidget {
                       //     ],
                       //   ),
                       // ),
+                      Positioned(
+                        bottom: 20,
+                        left: 10,
+                        child: MyButton(
+                          width: MediaQuery.of(context).size.width - 20,
+                          height: 60,
+                          text: 'حفظ الأسعار',
+                          buttonColor: MyTheme.blueColor,
+                          action: () => controller.priceProduct(),
+                        ),
+                      ),
                     ],
                   ),
           ),

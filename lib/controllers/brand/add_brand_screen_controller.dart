@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:nq_mall_dashboard/apis/brand/add_brand_api.dart';
+import 'package:nq_mall_dashboard/controllers/brand/brand_screen_controller.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io' as io;
@@ -63,9 +64,9 @@ class AddBrandScreenController extends GetxController {
       update();
       if (responseModel.code == 200 || responseModel.code == 201) {
         Get.back();
-        CategoryScreenController categoryScreenController =
-            Get.find<CategoryScreenController>();
-        categoryScreenController.onInit();
+        BrandScreenController brandScreenController =
+            Get.find<BrandScreenController>();
+        brandScreenController.onInit();
       }
     } catch (e) {
       if (e is ConnectionTimeOut) {

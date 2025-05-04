@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
+import 'package:nq_mall_dashboard/models/user_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 
 import '../../models/response_model.dart';
@@ -16,7 +18,8 @@ class DeleteBrandApi {
   Future<ResponseModel> callApi({required BrandModel brandModel}) async {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/brands/delete/${brandModel.Id}');
-    // apiHundler.setToken(userModel.token!);
+    apiHundler.setToken(getIt.get<UserModel>().Token!);
+
     var response = await apiHundler.delete();
     Map<String, dynamic> data = json.decode(response.body);
     ResponseModel responseModel = ResponseModel.fromMap(data);

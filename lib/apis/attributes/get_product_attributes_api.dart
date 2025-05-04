@@ -3,10 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
+import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
+import 'package:nq_mall_dashboard/models/user_model.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 import "package:dio/dio.dart" as dioPackage;
 
@@ -25,6 +27,8 @@ class GetProductAttributesApi {
     ApiHundler apiHundler = ApiHundler();
     apiHundler
         .setEndPoint('/attributes/getProductAttribute/${productModel.Id}');
+    apiHundler.setToken(getIt.get<UserModel>().Token!);
+
     // apiHundler.setToken(userModel.token!);
 
     var response = await apiHundler.get();

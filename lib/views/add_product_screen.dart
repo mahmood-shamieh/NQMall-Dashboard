@@ -246,8 +246,10 @@ class AddProductScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                       Container(
-                                                        margin: const EdgeInsets
-                                                            .only(left: 10),
+                                                        margin:
+                                                            const EdgeInsetsDirectional
+                                                                .only(
+                                                                start: 10),
                                                         width: 40,
                                                         height: 60,
                                                         decoration:
@@ -421,8 +423,10 @@ class AddProductScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                       Container(
-                                                        margin: const EdgeInsets
-                                                            .only(left: 10),
+                                                        margin:
+                                                            const EdgeInsetsDirectional
+                                                                .only(
+                                                                start: 10),
                                                         width: 40,
                                                         height: 60,
                                                         decoration:
@@ -581,26 +585,26 @@ class AddProductScreen extends StatelessWidget {
                                   margin: EdgeInsets.all(0),
                                   controller: controller.descEn,
                                 ),
-                                const TextWidget(
-                                  text: "السعر",
-                                  textAlign: TextAlign.start,
-                                ),
-                                const SizedBox(height: 5),
-                                TextFieldWidget(
-                                  hintText: "السعر",
-                                  margin: EdgeInsets.all(0),
-                                  controller: controller.price,
-                                ),
-                                const TextWidget(
-                                  text: "سعر التخفيضات إن وجد",
-                                  textAlign: TextAlign.start,
-                                ),
-                                const SizedBox(height: 5),
-                                TextFieldWidget(
-                                  hintText: "سعر التخفيضات إن وجد",
-                                  margin: EdgeInsets.all(0),
-                                  controller: controller.salePrice,
-                                ),
+                                // const TextWidget(
+                                //   text: "السعر",
+                                //   textAlign: TextAlign.start,
+                                // ),
+                                // const SizedBox(height: 5),
+                                // TextFieldWidget(
+                                //   hintText: "السعر",
+                                //   margin: EdgeInsets.all(0),
+                                //   controller: controller.price,
+                                // ),
+                                // const TextWidget(
+                                //   text: "سعر التخفيضات إن وجد",
+                                //   textAlign: TextAlign.start,
+                                // ),
+                                // const SizedBox(height: 5),
+                                // TextFieldWidget(
+                                //   hintText: "سعر التخفيضات إن وجد",
+                                //   margin: EdgeInsets.all(0),
+                                //   controller: controller.salePrice,
+                                // ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -821,44 +825,43 @@ class AddProductScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: MyTheme.appBarColor,
-                                    borderRadius: MyTheme.buttonsRadius,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 5),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const TextWidget(
-                                            text: "تفاصيل المنتج ( كتابة )",
-                                            textAlign: TextAlign.start,
-                                          ),
-                                          MyButton(
-                                            text: "إضافة",
-                                            action: () =>
-                                                controller.addTextAttribute(),
-                                            buttonColor: MyTheme.blueColor,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 4),
-                                            margin: const EdgeInsets.symmetric(
-                                              vertical: 4,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                    ],
-                                  ),
-                                ),
+                                // Container(
+                                //   decoration: BoxDecoration(
+                                //     color: MyTheme.appBarColor,
+                                //     borderRadius: MyTheme.buttonsRadius,
+                                //   ),
+                                //   padding: const EdgeInsets.symmetric(
+                                //       horizontal: 8, vertical: 5),
+                                //   child: Column(
+                                //     children: [
+                                //       Row(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.spaceBetween,
+                                //         children: [
+                                //           const TextWidget(
+                                //             text: "تفاصيل المنتج ( كتابة )",
+                                //             textAlign: TextAlign.start,
+                                //           ),
+                                //           MyButton(
+                                //             text: "إضافة",
+                                //             action: () =>
+                                //                 controller.addTextAttribute(),
+                                //             buttonColor: MyTheme.blueColor,
+                                //             padding: const EdgeInsets.symmetric(
+                                //                 horizontal: 10, vertical: 4),
+                                //             margin: const EdgeInsets.symmetric(
+                                //               vertical: 4,
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //       const SizedBox(height: 5),
+                                //     ],
+                                //   ),
+                                // ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                
                                 MyButton(
                                   action: () => controller.submit(),
                                   buttonColor: MyTheme.blueColor,
@@ -967,17 +970,17 @@ class AddProductScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Container(
-                            // width: 120,
-                            // height: 80,
-                            child: MyButton(
-                              action: () async {
-                                controller.submit();
-                              },
-                              text: "aaa",
-                              buttonColor: MyTheme.blueColor,
-                            ),
-                          )
+                          // Container(
+                          //   // width: 120,
+                          //   // height: 80,
+                          //   child: MyButton(
+                          //     action: () async {
+                          //       controller.submit();
+                          //     },
+                          //     text: "aaa",
+                          //     buttonColor: MyTheme.blueColor,
+                          //   ),
+                          // )
                         ],
                       ),
                     ),

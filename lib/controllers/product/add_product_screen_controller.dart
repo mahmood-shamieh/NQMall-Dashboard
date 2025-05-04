@@ -14,11 +14,13 @@ import 'package:nq_mall_dashboard/apis/category/get_all_categories_no_pagination
 import 'package:nq_mall_dashboard/apis/media/add_media_api.dart';
 import 'package:nq_mall_dashboard/apis/product/add_product_api.dart';
 import 'package:nq_mall_dashboard/controllers/product/product_screen_controller.dart';
+import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/models/response_model.dart';
+import 'package:nq_mall_dashboard/models/user_model.dart';
 
 class AddProductScreenController extends GetxController {
   RxBool loading = false.obs;
@@ -47,7 +49,7 @@ class AddProductScreenController extends GetxController {
   TextEditingController salePrice = TextEditingController();
   @override
   void onInit() async {
-    fillfileds();
+    // fillfileds();
     await loadBrands();
     await loadCategories();
     selectedBrand = Rx(brands!.first);
@@ -61,8 +63,8 @@ class AddProductScreenController extends GetxController {
     nameEn.text = "product2";
     descAr.text = "descAr";
     descEn.text = "descEn";
-    price.text = 123.toString();
-    salePrice.text = 321.toString();
+    // price.text = 123.toString();
+    // salePrice.text = 321.toString();
     // for (var element in [1, 2])
     {
       Map<String, TextEditingController> data = {
@@ -130,110 +132,110 @@ class AddProductScreenController extends GetxController {
     final Uint8List bytes2 = data2.buffer.asUint8List();
     final Uint8List bytes3 = data3.buffer.asUint8List();
     imagesBytes.addAll([bytes, bytes1, bytes2, bytes3]);
-    Map<String, TextEditingController> textAttribute = {
-      "nameAr": TextEditingController(),
-      "nameEn": TextEditingController(),
-    };
-    textAttribute['nameAr']!.text = "text att1";
-    textAttribute['nameEn']!.text = "text att1";
-    textAttributes.add(textAttribute);
-    Map<String, dynamic> dataValue = {
-      "valueAr": TextEditingController(),
-      "valueEn": TextEditingController(),
-      "imageByte": bytes,
-    };
-    dataValue['valueAr']!.text = "text att1 val1";
-    dataValue['valueEn']!.text = "text att1 val1";
-    if (textAttributesValues[textAttribute.hashCode] == null) {
-      textAttributesValues[textAttribute.hashCode] = [];
-    }
-    textAttributesValues[textAttribute.hashCode]!.add(dataValue);
-    dataValue = {
-      "valueAr": TextEditingController(),
-      "valueEn": TextEditingController(),
-      "imageByte": bytes,
-    };
-    dataValue['valueAr']!.text = "text att1 val2";
-    dataValue['valueEn']!.text = "text att1 val2";
-    if (textAttributesValues[textAttribute.hashCode] == null) {
-      textAttributesValues[textAttribute.hashCode] = [];
-    }
-    textAttributesValues[textAttribute.hashCode]!.add(dataValue);
-    textAttribute = {
-      "nameAr": TextEditingController(),
-      "nameEn": TextEditingController(),
-    };
-    textAttribute['nameAr']!.text = "text att2";
-    textAttribute['nameEn']!.text = "text att2";
-    textAttributes.add(textAttribute);
-    dataValue = {
-      "valueAr": TextEditingController(),
-      "valueEn": TextEditingController(),
-      "imageByte": bytes,
-    };
-    dataValue['valueAr']!.text = "text att2 val1";
-    dataValue['valueEn']!.text = "text att2 val1";
-    if (textAttributesValues[textAttribute.hashCode] == null) {
-      textAttributesValues[textAttribute.hashCode] = [];
-    }
-    textAttributesValues[textAttribute.hashCode]!.add(dataValue);
-    dataValue = {
-      "valueAr": TextEditingController(),
-      "valueEn": TextEditingController(),
-      "imageByte": bytes,
-    };
-    dataValue['valueAr']!.text = "text att2 val2";
-    dataValue['valueEn']!.text = "text att2 val2";
-    if (textAttributesValues[textAttribute.hashCode] == null) {
-      textAttributesValues[textAttribute.hashCode] = [];
-    }
-    textAttributesValues[textAttribute.hashCode]!.add(dataValue);
-    Map<String, TextEditingController> imageAttributesMap = {
-      "nameAr": TextEditingController(),
-      "nameEn": TextEditingController(),
-    };
-    imageAttributesMap['nameAr']!.text = "image att1";
-    imageAttributesMap['nameEn']!.text = "image att1";
-    imageAttributes.add(imageAttributesMap);
-    Map<String, dynamic> dataValueImageAttributes = {
-      "imageByteAr": bytes2,
-      "imageByteEn": bytes1,
-      "imageByte": bytes3,
-    };
-    if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
-      imageAttributesValues[imageAttributesMap.hashCode] = [];
-    }
-    imageAttributesValues[imageAttributesMap.hashCode]!
-        .add(dataValueImageAttributes);
-    dataValueImageAttributes = {
-      "imageByteAr": bytes2,
-      "imageByteEn": bytes1,
-      "imageByte": bytes3,
-    };
-    if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
-      imageAttributesValues[imageAttributesMap.hashCode] = [];
-    }
+    // Map<String, TextEditingController> textAttribute = {
+    //   "nameAr": TextEditingController(),
+    //   "nameEn": TextEditingController(),
+    // };
+    // textAttribute['nameAr']!.text = "text att1";
+    // textAttribute['nameEn']!.text = "text att1";
+    // textAttributes.add(textAttribute);
+    // Map<String, dynamic> dataValue = {
+    //   "valueAr": TextEditingController(),
+    //   "valueEn": TextEditingController(),
+    //   "imageByte": bytes,
+    // };
+    // dataValue['valueAr']!.text = "text att1 val1";
+    // dataValue['valueEn']!.text = "text att1 val1";
+    // if (textAttributesValues[textAttribute.hashCode] == null) {
+    //   textAttributesValues[textAttribute.hashCode] = [];
+    // }
+    // textAttributesValues[textAttribute.hashCode]!.add(dataValue);
+    // dataValue = {
+    //   "valueAr": TextEditingController(),
+    //   "valueEn": TextEditingController(),
+    //   "imageByte": bytes,
+    // };
+    // dataValue['valueAr']!.text = "text att1 val2";
+    // dataValue['valueEn']!.text = "text att1 val2";
+    // if (textAttributesValues[textAttribute.hashCode] == null) {
+    //   textAttributesValues[textAttribute.hashCode] = [];
+    // }
+    // textAttributesValues[textAttribute.hashCode]!.add(dataValue);
+    // textAttribute = {
+    //   "nameAr": TextEditingController(),
+    //   "nameEn": TextEditingController(),
+    // };
+    // textAttribute['nameAr']!.text = "text att2";
+    // textAttribute['nameEn']!.text = "text att2";
+    // textAttributes.add(textAttribute);
+    // dataValue = {
+    //   "valueAr": TextEditingController(),
+    //   "valueEn": TextEditingController(),
+    //   "imageByte": bytes,
+    // };
+    // dataValue['valueAr']!.text = "text att2 val1";
+    // dataValue['valueEn']!.text = "text att2 val1";
+    // if (textAttributesValues[textAttribute.hashCode] == null) {
+    //   textAttributesValues[textAttribute.hashCode] = [];
+    // }
+    // textAttributesValues[textAttribute.hashCode]!.add(dataValue);
+    // dataValue = {
+    //   "valueAr": TextEditingController(),
+    //   "valueEn": TextEditingController(),
+    //   "imageByte": bytes,
+    // };
+    // dataValue['valueAr']!.text = "text att2 val2";
+    // dataValue['valueEn']!.text = "text att2 val2";
+    // if (textAttributesValues[textAttribute.hashCode] == null) {
+    //   textAttributesValues[textAttribute.hashCode] = [];
+    // }
+    // textAttributesValues[textAttribute.hashCode]!.add(dataValue);
+    // Map<String, TextEditingController> imageAttributesMap = {
+    //   "nameAr": TextEditingController(),
+    //   "nameEn": TextEditingController(),
+    // };
+    // imageAttributesMap['nameAr']!.text = "image att1";
+    // imageAttributesMap['nameEn']!.text = "image att1";
+    // imageAttributes.add(imageAttributesMap);
+    // Map<String, dynamic> dataValueImageAttributes = {
+    //   "imageByteAr": bytes2,
+    //   "imageByteEn": bytes1,
+    //   "imageByte": bytes3,
+    // };
+    // if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
+    //   imageAttributesValues[imageAttributesMap.hashCode] = [];
+    // }
+    // imageAttributesValues[imageAttributesMap.hashCode]!
+    //     .add(dataValueImageAttributes);
+    // dataValueImageAttributes = {
+    //   "imageByteAr": bytes2,
+    //   "imageByteEn": bytes1,
+    //   "imageByte": bytes3,
+    // };
+    // if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
+    //   imageAttributesValues[imageAttributesMap.hashCode] = [];
+    // }
 
-    imageAttributesValues[imageAttributesMap.hashCode]!
-        .add(dataValueImageAttributes);
-    imageAttributesMap = {
-      "nameAr": TextEditingController(),
-      "nameEn": TextEditingController(),
-    };
-    imageAttributesMap['nameAr']!.text = "image att2";
-    imageAttributesMap['nameEn']!.text = "image att2";
-    imageAttributes.add(imageAttributesMap);
-    dataValueImageAttributes = {
-      "imageByteAr": bytes2,
-      "imageByteEn": bytes1,
-      "imageByte": bytes3,
-    };
-    if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
-      imageAttributesValues[imageAttributesMap.hashCode] = [];
-    }
+    // imageAttributesValues[imageAttributesMap.hashCode]!
+    //     .add(dataValueImageAttributes);
+    // imageAttributesMap = {
+    //   "nameAr": TextEditingController(),
+    //   "nameEn": TextEditingController(),
+    // };
+    // imageAttributesMap['nameAr']!.text = "image att2";
+    // imageAttributesMap['nameEn']!.text = "image att2";
+    // imageAttributes.add(imageAttributesMap);
+    // dataValueImageAttributes = {
+    //   "imageByteAr": bytes2,
+    //   "imageByteEn": bytes1,
+    //   "imageByte": bytes3,
+    // };
+    // if (imageAttributesValues[imageAttributesMap.hashCode] == null) {
+    //   imageAttributesValues[imageAttributesMap.hashCode] = [];
+    // }
 
-    imageAttributesValues[imageAttributesMap.hashCode]!
-        .add(dataValueImageAttributes);
+    // imageAttributesValues[imageAttributesMap.hashCode]!
+    //     .add(dataValueImageAttributes);
 
     update();
   }
@@ -466,11 +468,11 @@ class AddProductScreenController extends GetxController {
       NameEn: nameEn.text.trim(),
       DescriptionAr: descAr.text.trim(),
       DescriptionEn: descEn.text.trim(),
-      Price: int.parse(price.text.trim()),
-      SalePrice: int.parse(salePrice.text.trim()),
+      Price: 0,
+      SalePrice: 0,
       DetailsAr: detailsAr,
       DetailsEn: detailsEn,
-      userId: 1,
+      userId: getIt.get<UserModel>().Id,
       IsActive: true,
       categoryId: selectedCategory?.value.Id,
       brandId: selectedBrand?.value.Id,
@@ -482,6 +484,7 @@ class AddProductScreenController extends GetxController {
     update();
     ResponseModel responseModel =
         await AddProductApi().callApi(productModel: productModel);
+    print(responseModel);
     if (responseModel.code == 200) {
       productModel = ProductModel.fromMap(responseModel.data);
       createProduct(false);
@@ -489,6 +492,7 @@ class AddProductScreenController extends GetxController {
 
       ResponseModel uploadMediaResponse = await AddMediaApi()
           .callApi(productModel: productModel, images: imagesBytes);
+      print(uploadMediaResponse);
       if (uploadMediaResponse.code == 200) {
         uploadMedia(false);
         update();
@@ -525,6 +529,7 @@ class AddProductScreenController extends GetxController {
               IsActive: true,
             ),
           );
+
           // });
         });
       }

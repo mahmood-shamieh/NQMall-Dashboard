@@ -104,6 +104,10 @@ class AttributeImagesValuesScreenController extends GetxController {
           hoverImageAr: imageAr,
           hoverImageEn: imageEn);
       if (responseModel.code == 200) {
+        newValueAr = null;
+        newValueEn = null;
+        imageAr = null;
+        imageEn = null;
         onInit();
         showAddDialogFunction();
       }

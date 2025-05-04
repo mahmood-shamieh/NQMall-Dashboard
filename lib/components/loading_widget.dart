@@ -10,7 +10,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
-        // color: color ?? MyTheme.mainColor,
-        );
+      color: color ?? MyTheme.blackColor,
+    );
   }
 }

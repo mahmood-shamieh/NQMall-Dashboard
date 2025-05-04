@@ -16,17 +16,20 @@ import 'package:nq_mall_dashboard/apis/attributesValues/edit_attribute_image_val
 import 'package:nq_mall_dashboard/apis/attributesValues/edit_attribute_text_value_api.dart';
 import 'package:nq_mall_dashboard/apis/attributesValues/get_attribute_values_api.dart';
 import 'package:nq_mall_dashboard/apis/product/pricing_product_api.dart';
+import 'package:nq_mall_dashboard/apis/variations/get_product_variations_api.dart';
 import 'package:nq_mall_dashboard/models/tree.dart';
 import 'package:nq_mall_dashboard/models/tree_node.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
 import 'package:nq_mall_dashboard/models/response_model.dart';
 import 'package:nq_mall_dashboard/models/value_model.dart';
+import 'package:nq_mall_dashboard/models/variation_model.dart';
 
 class ProductPricingScreenController extends GetxController {
   late ProductModel productModel;
   RxBool loadDetails = false.obs;
   List<AttributeModel> attributes = [];
+  List<VariationModel> variations = [];
   Rx<String> data = Rx('');
   List<List<ValueModel>> allCombinations = [];
   List<Map<String, TextEditingController>> quantityAndPrice = [];
@@ -34,7 +37,24 @@ class ProductPricingScreenController extends GetxController {
   @override
   void onInit() async {
     await loadValues();
+    await loadVariations();
     buildTreeAction();
+  }
+
+  isVariationMatchWithValues(
+      {required VariationModel variationModel,
+      required List<ValueModel> valueModels}) {
+    for (ValueModel valueModel in valueModels) {
+      bool exist = false;
+      for (ValueModel variationValue in variationModel.Values ?? []) {
+        if (valueModel.Id == variationValue.Id) {
+          exist = true;
+          break;
+        }
+      }
+      if (!exist) return false;
+    }
+    return true;
   }
 
   bool showSaveEditsButton() {
@@ -61,6 +81,24 @@ class ProductPricingScreenController extends GetxController {
     update();
   }
 
+  FutureOr loadVariations() async {
+    loadDetails(true);
+    update();
+    try {
+      ResponseModel responseModel =
+          await GetProductVariationsApi().callApi(productModel: productModel);
+      if (responseModel.code == 200) {
+        variations = (responseModel.data as List)
+            .map((e) => VariationModel.fromMap(e))
+            .toList();
+      }
+    } catch (e) {
+      print(e);
+    }
+    loadDetails(false);
+    update();
+  }
+
   void buildTreeAction() {
     List<AttributeModel> tempAttributes = List.from(attributes);
 
@@ -76,13 +114,29 @@ class ProductPricingScreenController extends GetxController {
     for (TreeNode child in root.children) {
       generateCombinations(child, [], allCombinations);
     }
-    int i = 1;
-    for (var combination in allCombinations) {
-      quantityAndPrice.add({
-        "quantity": TextEditingController(text: i.toString()),
-        "price": TextEditingController(text: i.toString())
-      });
-      i++;
+    // int i = 1;
+    for (List<ValueModel> combination in allCombinations) {
+      bool filled = false;
+      if (variations.isNotEmpty) {
+        for (VariationModel variation in variations) {
+          if (isVariationMatchWithValues(
+              variationModel: variation, valueModels: combination)) {
+            filled = true;
+            quantityAndPrice.add({
+              "quantity": TextEditingController(text: variation.Stock),
+              "price": TextEditingController(text: variation.Price)
+            });
+            break;
+          }
+        }
+      }
+      if (!filled) {
+        quantityAndPrice.add({
+          "quantity": TextEditingController(text: 0.toString()),
+          "price": TextEditingController(text: 0.toString())
+        });
+      }
+      // i++;
     }
   }
 
@@ -118,8 +172,8 @@ class ProductPricingScreenController extends GetxController {
         temp.add({
           "valueId": allCombinations.elementAt(i).map((e) => e.Id).toList(),
           "variation": {
-            "Price": quantityAndPrice.elementAt(i)['quantity']!.text,
-            "Stock": quantityAndPrice.elementAt(i)['price']!.text,
+            "Price": quantityAndPrice.elementAt(i)['price']!.text,
+            "Stock": quantityAndPrice.elementAt(i)['quantity']!.text,
             "productId": productModel.Id
           }
         });

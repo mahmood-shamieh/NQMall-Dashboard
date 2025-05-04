@@ -1,4 +1,5 @@
 enum Pages {
+  profile,
   category,
   brands,
   products,

@@ -108,6 +108,7 @@ class BrandScreenController extends GetxController {
       loading(false);
       update();
       if (responseModel.code == 200) {
+        brands?.removeWhere((e) => e.Id == brandModel.Id);
         Get.back();
         BrandScreenController categoryScreenController =
             Get.find<BrandScreenController>();

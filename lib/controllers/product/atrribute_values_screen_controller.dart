@@ -172,8 +172,13 @@ class AttributeValuesScreenController extends GetxController {
       if (responseModel.code == 200) {
         onInit();
         showAddDialogFunction();
+        newValueAr.clear();
+        newValueEn.clear();
+        imageAr = null;
+        imageEn = null;
       }
     } catch (e) {
+      print("=========");
       print(e);
     }
     loadDetails(false);
@@ -220,7 +225,6 @@ class AttributeValuesScreenController extends GetxController {
                 ),
                 hoverImageAr: valuesImages[element.Id]?['HoverImageAr'],
                 hoverImageEn: valuesImages[element.Id]?['HoverImageEn']);
-        print(responseModel);
         if (responseModel.code == 200) {}
       } catch (e) {
         print(e);

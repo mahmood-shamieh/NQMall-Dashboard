@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
+import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/brand_model.dart';
 import 'package:nq_mall_dashboard/models/category_model.dart';
 import 'package:nq_mall_dashboard/models/product_model.dart';
+import 'package:nq_mall_dashboard/models/user_model.dart';
 import 'package:nq_mall_dashboard/shared/file_utility.dart';
 import 'package:nq_mall_dashboard/shared/map_utility.dart';
 
@@ -21,6 +23,8 @@ class AddMediaApi {
       required List<Uint8List> images}) async {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/media/create');
+    apiHundler.setToken(getIt.get<UserModel>().Token!);
+
     // apiHundler.setToken(userModel.token!);
 
     // http.MultipartFile tempFile =

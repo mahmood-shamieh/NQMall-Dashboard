@@ -107,6 +107,7 @@ class CategoryScreenController extends GetxController {
       loading(false);
       update();
       if (responseModel.code == 200) {
+        categories?.removeWhere((e) => e.Id == categoryModel.Id);
         Get.back();
         CategoryScreenController categoryScreenController =
             Get.find<CategoryScreenController>();

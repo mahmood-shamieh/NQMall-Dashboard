@@ -28,17 +28,13 @@ class ProductScreenController extends GetxController {
   TextEditingController searchBarText = TextEditingController();
 
   void getAllProducts() async {
-    // loading(true);
-    // update();
     loading(true);
     update();
-    // await Future.delayed(Duration(seconds: 1), () async {
     ResponseModel response = await GetAllProductsApi().callApi(details: {
       "searchQuery": searchBarText.text,
       "page": page.toString(),
       "limit": itemPerPage.toString(),
     });
-    print(response);
 
     PaginationModel paginationModel = PaginationModel.fromMap(response.data);
     List<ProductModel> temp = paginationModel.data!
@@ -116,6 +112,7 @@ class ProductScreenController extends GetxController {
       update();
       if (responseModel.code == 200) {
         Get.back();
+        products?.removeWhere((e) => e.Id == productModel.Id);
         ProductScreenController productScreenController =
             Get.find<ProductScreenController>();
         productScreenController.onInit();

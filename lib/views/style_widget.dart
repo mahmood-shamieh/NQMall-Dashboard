@@ -8,6 +8,7 @@ import 'package:nq_mall_dashboard/views/brands_screen.dart';
 import 'package:nq_mall_dashboard/views/category_screen.dart';
 import 'package:nq_mall_dashboard/views/drawer_page.dart';
 import 'package:nq_mall_dashboard/views/product_screen.dart';
+import 'package:nq_mall_dashboard/views/profile_screen.dart';
 
 class StyleWidget extends StatelessWidget {
   const StyleWidget({super.key});
@@ -21,6 +22,8 @@ class StyleWidget extends StatelessWidget {
         return CategoryScreen();
       } else if (pages == Pages.products) {
         return ProductScreen();
+      } else if (pages == Pages.profile) {
+        return ProfileScreen();
       }
 
       return Container();

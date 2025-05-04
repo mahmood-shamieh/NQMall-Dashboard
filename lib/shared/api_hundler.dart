@@ -18,6 +18,7 @@ class ApiHundler {
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': '',
+    'lang': 'ar',
     // Add other headers as needed
   };
 
@@ -61,19 +62,24 @@ class ApiHundler {
   post({dynamic body}) async {
     // bool result = await InternetConnectionChecker().hasConnection;
     // if (result == true) {
-    // try {
-    var data = await http
-        .post(apiLink, body: body, headers: headers)
-        .timeout(Duration(seconds: timeOutConnection));
+    print("::::::::::> Api ${apiLink} Called");
+    try {
+      var data = await http
+          .post(apiLink, body: body, headers: headers)
+          .timeout(Duration(seconds: timeOutConnection));
+      print("::::::::::> Api ${apiLink} Finished");
+      print("::::::::::> Api Response ${data}");
 
-    return data;
-    // } catch (e) {
-    //   if (e is TimeoutException) {
-    //     throw ConnectionTimeOut();
-    //   } else {
-    //     throw UndefindProblem();
-    // }
-    // }
+      return data;
+    } catch (e) {
+      e.printError();
+      print(e);
+      if (e is TimeoutException) {
+        throw ConnectionTimeOut();
+      } else {
+        throw UndefindProblem();
+      }
+    }
     // } else {
     //   throw NoInternetConnection();
     // }
@@ -130,6 +136,9 @@ class ApiHundler {
       data: body,
       options: dioPackage.Options(
         contentType: 'multipart/form-data',
+        headers: headers['Authorization'] != null
+            ? {'Authorization': headers['Authorization'], 'lang': 'ar'}
+            : {'lang': 'ar'},
       ),
     );
     return response.data;
