@@ -77,7 +77,8 @@ class EditCategoryScreen extends StatelessWidget {
                                 ),
                                 MyButton(
                                   action: () => controller.chooseImage(),
-                                  width: 40,
+                                  width:
+                                      Responsive.isDesktop(context) ? 200 : 40,
                                   margin: EdgeInsets.only(bottom: 5),
                                   text: "تغيير الصورة",
                                   buttonColor: MyTheme.blueColor,
@@ -86,26 +87,28 @@ class EditCategoryScreen extends StatelessWidget {
                             ),
                             Center(
                               child: Container(
-                                width: Responsive.isDesktop(context)
-                                    ? 200
-                                    : MediaQuery.of(context).size.width,
-                                height: 250,
-                                decoration: BoxDecoration(
-                                  color: MyTheme.appBarColor,
-                                  image: controller.image != null
-                                      ? DecorationImage(
-                                          image: FileImage(
-                                            controller.image!,
-                                          ),
-                                          fit: BoxFit.cover)
-                                      : null,
-                                ),
-                                child: controller.image == null
-                                    ? Image.network(Constants.mediaUrl! +
-                                        "/" +
-                                        controller.categoryModel.ImageURL!)
-                                    : Container(),
-                              ),
+                                  width: Responsive.isDesktop(context)
+                                      ? 200
+                                      : MediaQuery.of(context).size.width,
+                                  height: 250,
+                                  decoration: BoxDecoration(
+                                      color: MyTheme.appBarColor,
+                                      image: controller.imageBytes != null
+                                          ? DecorationImage(
+                                              image: MemoryImage(
+                                                controller.imageBytes!,
+                                              ),
+                                              fit: BoxFit.fill)
+                                          : null),
+                                  child: controller.imageBytes == null
+                                      ? Image.network(
+                                          Constants.mediaUrl! +
+                                              "/" +
+                                              controller
+                                                  .categoryModel.ImageURL!,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Container()),
                             ),
                             const TextWidget(
                               text: "الاسم بالعربي",

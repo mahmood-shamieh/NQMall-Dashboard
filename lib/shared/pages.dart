@@ -7,5 +7,6 @@ enum Pages {
   admins,
   attributes,
   rating,
-  cart
+  cart,
+  orders
 }

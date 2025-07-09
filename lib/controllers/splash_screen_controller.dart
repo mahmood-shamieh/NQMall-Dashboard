@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -15,12 +17,13 @@ import 'package:nq_mall_dashboard/models/user_model.dart';
 import 'package:nq_mall_dashboard/shared/local_storage_keys.dart';
 import 'package:nq_mall_dashboard/shared/pages.dart';
 import 'package:nq_mall_dashboard/shared/theme.dart';
+import 'package:nq_mall_dashboard/shared/validate_app_availability.dart';
 import 'package:nq_mall_dashboard/views/sign_in_screen.dart';
 import 'package:nq_mall_dashboard/views/style_widget.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SplashScreenController extends GetxController {
   RxBool loading = false.obs;
-
   @override
   void onInit() {
     // print("aaaaa");
@@ -45,14 +48,63 @@ class SplashScreenController extends GetxController {
       loading(false);
       update();
       if (responseModel.code == 200) {
-        UserModel userModel = UserModel.fromMap(responseModel.data);
+        UserModel tempUser = UserModel.fromMap(responseModel.data);
+        tempUser.password = userModel.password;
+        Map isAppAvailable = await ValidateAppAvailability.isAppAvailable(
+            appConfigModel: userModel.appConfig!);
+        if (!isAppAvailable['WorkingOrNot']) {
+          Get.dialog(
+            DialogBox2(
+              title: "تحديث التطبيق",
+              body: const TextWidget(
+                text:
+                    "يرجى تحديث التطبيق إلى أحدث إصدار للاستمرار في استخدام الخدمة",
+                textAlign: TextAlign.center,
+              ),
+              actions: Wrap(
+                children: [
+                  MyButton(
+                    action: () => exit(0),
+                    text: "إغلاق",
+                    textColor: MyTheme.mainColor,
+                    buttonColor: MyTheme.iconColor,
+                    fontSize: 16,
+                  ),
+                ],
+              ),
+            ),
+          );
+          return;
+        } else if (!isAppAvailable['DashboardEnabled']) {
+          Get.dialog(
+            DialogBox2(
+              title: "التطبيق غير مفعل",
+              body: const TextWidget(
+                text: "يرجى التواصل مع الدعم للاستمرار في استخدام الخدمة",
+                textAlign: TextAlign.center,
+              ),
+              actions: Wrap(
+                children: [
+                  MyButton(
+                    action: () => exit(0),
+                    text: "إغلاق",
+                    textColor: MyTheme.mainColor,
+                    buttonColor: MyTheme.iconColor,
+                    fontSize: 16,
+                  ),
+                ],
+              ),
+            ),
+          );
+          return;
+        }
         if (getIt.isRegistered<UserModel>()) {
           getIt.unregister<UserModel>();
         }
-        getIt.registerSingleton(userModel);
+        getIt.registerSingleton(tempUser);
         getIt
             .get<GetStorage>()
-            .write(LocalStorageKeys.LocalUserModel.key, userModel.toJson());
+            .write(LocalStorageKeys.LocalUserModel.key, tempUser.toJson());
         Get.offAll(const StyleWidget());
       } else if (responseModel.code == 403) {
         Get.offAll(const SignInScreen());

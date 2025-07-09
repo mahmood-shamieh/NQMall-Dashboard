@@ -18,6 +18,15 @@ class UpdateProductApi {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/products/update');
     apiHundler.setToken(getIt.get<UserModel>().Token!);
+    Map<String, String> request = {
+      "Id": productModel.Id.toString(),
+      "NameAr": productModel.NameAr.toString(),
+      "NameEn": productModel.NameEn.toString(),
+      "DescriptionAr": productModel.DescriptionAr.toString(),
+      "DescriptionEn": productModel.DescriptionEn.toString(),
+      "Price": productModel.Price.toString(),
+      "SalePrice": productModel.SalePrice.toString(),
+    };
 
     // http.MultipartFile tempFile =
     //     await http.MultipartFile.fromPath('image', image.path);
@@ -41,7 +50,7 @@ class UpdateProductApi {
     //   "brandId": categoryModel.NameEn ?? '',
     // };
     var response = await apiHundler.post(
-      body: productModel.toJson(),
+      body: json.encode(request),
     );
 
     // print(response.runtimeType);

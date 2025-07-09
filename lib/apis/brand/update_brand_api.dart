@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/main.dart';
@@ -16,17 +17,17 @@ import 'package:http/http.dart' as http;
 
 class UpdateBrandApi {
   Future<ResponseModel> callApi(
-      {required BrandModel brandModel, File? image}) async {
+      {required BrandModel brandModel,
+      Uint8List? image,
+      String? filename}) async {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/brands/update');
     apiHundler.setToken(getIt.get<UserModel>().Token!);
 
     http.MultipartFile? tempFile;
     if (image != null) {
-      tempFile = await http.MultipartFile.fromPath(
-        'image',
-        image.path,
-      );
+      tempFile = await http.MultipartFile.fromBytes('image', image,
+          filename: filename);
     }
 
     var response = await apiHundler.postMultiPartDate(

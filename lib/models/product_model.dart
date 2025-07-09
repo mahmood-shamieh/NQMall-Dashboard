@@ -140,7 +140,8 @@ class ProductModel {
     if (identical(this, other)) return true;
 
     return other is ProductModel &&
-        other.Id == Id &&
+            other.Id ==
+                Id /*  &&
         other.NameAr == NameAr &&
         other.NameEn == NameEn &&
         other.DescriptionAr == DescriptionAr &&
@@ -155,7 +156,8 @@ class ProductModel {
         other.brandId == brandId &&
         other.UpdatedAt == UpdatedAt &&
         other.CreatedAt == CreatedAt &&
-        listEquals(other.media, media);
+        listEquals(other.media, media) */
+        ;
   }
 
   @override

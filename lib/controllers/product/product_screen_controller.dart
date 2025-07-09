@@ -47,7 +47,7 @@ class ProductScreenController extends GetxController {
       page--;
     } else {
       for (ProductModel element in temp) {
-        products!.addIf(true || !products!.contains(element), element);
+        products!.addIf(!products!.contains(element), element);
       }
 
       if (scrollController.hasClients) {
@@ -69,6 +69,7 @@ class ProductScreenController extends GetxController {
       () {
         page = 1;
         products!.clear();
+        // update();
         getAllProducts();
       },
     );
@@ -84,17 +85,12 @@ class ProductScreenController extends GetxController {
       ResponseModel responseModel = await UpdateProductApi().callApi(
         productModel: productModel.copyWith(IsActive: status),
       );
-      // await Future.delayed(Duration(seconds: 3));
       loading(false);
       update();
-      // print(responseModel);
       if (responseModel.code == 200) {
         Get.back();
-        ProductScreenController productScreenController =
-            Get.find<ProductScreenController>();
-        productScreenController.onInit();
+        // onInit();
         productModel.IsActive = status;
-        // print(brandModel.IsActive);
       }
     } catch (e) {
       if (e is ConnectionTimeOut) {
@@ -113,9 +109,9 @@ class ProductScreenController extends GetxController {
       if (responseModel.code == 200) {
         Get.back();
         products?.removeWhere((e) => e.Id == productModel.Id);
-        ProductScreenController productScreenController =
-            Get.find<ProductScreenController>();
-        productScreenController.onInit();
+        // ProductScreenController productScreenController =
+        //     Get.find<ProductScreenController>();
+        // productScreenController.onInit();
       }
     } catch (e) {
       if (e is ConnectionTimeOut) {
@@ -124,7 +120,6 @@ class ProductScreenController extends GetxController {
   }
 
   void getBrandAtNextPage() {
-    print("Load more data");
     page++;
     getAllProducts();
     if (products!.isEmpty) page--;

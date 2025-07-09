@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -10,6 +11,8 @@ import 'package:nq_mall_dashboard/views/add_product_screen.dart';
 import 'package:nq_mall_dashboard/views/sign_in_screen.dart';
 import 'package:nq_mall_dashboard/views/splash_screen.dart';
 import 'package:nq_mall_dashboard/views/style_widget.dart';
+import 'services/notification_service.dart';
+import 'firebase_options.dart';
 
 import 'apis/category/get_all_category.dart';
 
@@ -17,8 +20,19 @@ TextDirection currentDirection = TextDirection.rtl;
 GetIt getIt = GetIt.I;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase with options
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Initialize Notification Service
+  final notificationService = Get.put(NotificationService());
+  await notificationService.init();
+
   await GetStorage.init();
   getIt.registerSingleton<GetStorage>(GetStorage());
+  // getIt.get<GetStorage>().erase();
   runApp(const MyApp());
 }
 

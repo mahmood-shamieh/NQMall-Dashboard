@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:nq_mall_dashboard/models/attribute_model.dart';
+
 class ValueModel {
   int? Id;
   String? ValueAr;
@@ -11,6 +13,7 @@ class ValueModel {
   DateTime? UpdatedAt;
   int? attributeId;
   String? type;
+  AttributeModel? attribute;
   ValueModel({
     this.Id,
     this.ValueAr,
@@ -22,6 +25,7 @@ class ValueModel {
     this.UpdatedAt,
     this.attributeId,
     this.type,
+    this.attribute,
   });
 
   ValueModel copyWith({
@@ -35,6 +39,7 @@ class ValueModel {
     DateTime? CreatedAt,
     DateTime? UpdatedAt,
     int? attributeId,
+    AttributeModel? attribute,
   }) {
     return ValueModel(
       Id: Id ?? this.Id,
@@ -47,6 +52,7 @@ class ValueModel {
       CreatedAt: CreatedAt ?? this.CreatedAt,
       UpdatedAt: UpdatedAt ?? this.UpdatedAt,
       attributeId: attributeId ?? this.attributeId,
+      attribute: attribute ?? this.attribute,
     );
   }
 
@@ -62,6 +68,7 @@ class ValueModel {
       'CreatedAt': CreatedAt?.toString(),
       'UpdatedAt': UpdatedAt?.toString(),
       'attributeId': attributeId,
+      'attribute': attribute?.toMap(),
     };
   }
 
@@ -79,6 +86,9 @@ class ValueModel {
       UpdatedAt:
           map['UpdatedAt'] != null ? DateTime.parse(map['UpdatedAt']) : null,
       attributeId: map['attributeId'] != null ? map['attributeId'] : null,
+      attribute: map['attribute'] != null
+          ? AttributeModel.fromMap(map['attribute'])
+          : null,
     );
   }
 
@@ -89,7 +99,7 @@ class ValueModel {
 
   @override
   String toString() {
-    return 'ValueModel(Id: $Id, ValueAr: $ValueAr, ValueEn: $ValueEn, HoverImageAr: $HoverImageAr, HoverImageEn: $HoverImageEn, IsActive: $IsActive, CreatedAt: $CreatedAt, UpdatedAt: $UpdatedAt, attributeId: $attributeId, type: $type)';
+    return 'ValueModel(Id: $Id, ValueAr: $ValueAr, ValueEn: $ValueEn, HoverImageAr: $HoverImageAr, HoverImageEn: $HoverImageEn, IsActive: $IsActive, CreatedAt: $CreatedAt, UpdatedAt: $UpdatedAt, attributeId: $attributeId, type: $type, attribute: $attribute)';
   }
 
   @override
@@ -106,7 +116,8 @@ class ValueModel {
         other.IsActive == IsActive &&
         other.CreatedAt == CreatedAt &&
         other.UpdatedAt == UpdatedAt &&
-        other.attributeId == attributeId;
+        other.attributeId == attributeId &&
+        other.attribute == attribute;
   }
 
   @override
@@ -119,6 +130,7 @@ class ValueModel {
         IsActive.hashCode ^
         CreatedAt.hashCode ^
         UpdatedAt.hashCode ^
-        attributeId.hashCode;
+        attributeId.hashCode ^
+        attribute.hashCode;
   }
 }

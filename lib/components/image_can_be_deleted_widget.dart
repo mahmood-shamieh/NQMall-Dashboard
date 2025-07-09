@@ -58,7 +58,7 @@ class ImageCanBeDeletedWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           image: NetworkImage(url),
         ),
       ),

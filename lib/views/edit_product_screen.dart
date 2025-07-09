@@ -485,6 +485,7 @@ class EditProductScreen extends StatelessWidget {
                               ,
                               buttonColor: MyTheme.blueColor,
                             ),
+
                             const SizedBox(
                               height: elementSpacing,
                             ),
@@ -494,6 +495,7 @@ class EditProductScreen extends StatelessWidget {
                                   "حفظ التعديلات"
                               // : ""
                               ,
+                              action: () => controller.editProductOperation(),
                               buttonColor: MyTheme.blueColor,
                             )
                           ],

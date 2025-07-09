@@ -28,8 +28,8 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> items = [
       Container(
-        // width: isMobile ?? false ? 100 : 40,
-        // height: isMobile ?? false ? 250 : 40,
+        width: isMobile ?? false ? 200 : 140,
+        height: isMobile ?? false ? 200 : 140,
         child: CarouselSlider(
           options: CarouselOptions(height: 300.0),
           items: productModel.media!.map((i) {
@@ -52,16 +52,8 @@ class ProductItem extends StatelessWidget {
             );
           }).toList(),
         ),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(4),
-        //   image: DecorationImage(
-        //     image: NetworkImage(
-        //         "${Constants.mediaUrl!}/${productModel.LogoUrl!.toUrl()}"),
-        //   ),
-        // ),
       ),
       SizedBox(
-        // color: Colors.amber,
         width: isMobile ?? false
             ? MediaQuery.of(context).size.width
             : MediaQuery.of(context).size.width / 8,
@@ -83,8 +75,6 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       SizedBox(
-        // color: Colors.blue,
-
         width: isMobile ?? false
             ? MediaQuery.of(context).size.width
             : MediaQuery.of(context).size.width / 8,
@@ -105,19 +95,7 @@ class ProductItem extends StatelessWidget {
           textAlign: TextAlign.start,
         ),
       ),
-      // SizedBox(
-      //   // color: Colors.red,
-      //   width: isMobile ?? false
-      //       ? MediaQuery.of(context).size.width
-      //       : MediaQuery.of(context).size.width / 8,
-      //   child: TextWidget(
-      //     text: productModel.LogoUrl ?? '',
-      //     fontWeight: FontWeight.w300,
-      //     textAlign: TextAlign.start,
-      //   ),
-      // ),
       SizedBox(
-        // color: Colors.amber,
         width: isMobile ?? false
             ? MediaQuery.of(context).size.width
             : MediaQuery.of(context).size.width / 8,
@@ -147,19 +125,11 @@ class ProductItem extends StatelessWidget {
                 ),
         ),
       ),
-
-      // IconButton(
-      //   onPressed: action,
-      //   icon: Icon(
-      //     Icons.menu,
-      //   ),
-      //   color: MyTheme.iconColor,
-      // )
       actionWidget
     ];
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      height: isMobile ?? false ? null : 60,
+      height: isMobile ?? false ? null : 200,
       decoration: BoxDecoration(
           color: MyTheme.appBarColor,
           border: Border.all(

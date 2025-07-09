@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +17,9 @@ import '../../models/response_model.dart';
 
 class EditBrandScreenController extends GetxController {
   RxBool loading = false.obs;
-  File? image;
+  // File? image;
+  Uint8List? image;
+  String? imageName;
   TextEditingController nameAr = TextEditingController();
   TextEditingController nameEn = TextEditingController();
   TextEditingController descAr = TextEditingController();
@@ -37,7 +40,8 @@ class EditBrandScreenController extends GetxController {
         .pickFiles(type: FileType.image, allowMultiple: false);
 
     if (result != null) {
-      image = File(result.files.single.path!);
+      image = result.files.single.bytes;
+      imageName = result.files.single.name;
       update();
     } else {}
   }

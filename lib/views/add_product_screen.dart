@@ -108,9 +108,11 @@ class AddProductScreen extends StatelessWidget {
                                 Center(
                                   child: Container(
                                     color: MyTheme.appBarColor,
-                                    width: Responsive.isDesktop(context)
-                                        ? 400
-                                        : MediaQuery.of(context).size.width,
+                                    width:
+                                        // Responsive.isDesktop(context)
+                                        //     ? 400
+                                        //     :
+                                        MediaQuery.of(context).size.width,
                                     height: 250,
                                     child: controller.imagesBytes.isEmpty
                                         ? Center(
@@ -585,26 +587,26 @@ class AddProductScreen extends StatelessWidget {
                                   margin: EdgeInsets.all(0),
                                   controller: controller.descEn,
                                 ),
-                                // const TextWidget(
-                                //   text: "السعر",
-                                //   textAlign: TextAlign.start,
-                                // ),
-                                // const SizedBox(height: 5),
-                                // TextFieldWidget(
-                                //   hintText: "السعر",
-                                //   margin: EdgeInsets.all(0),
-                                //   controller: controller.price,
-                                // ),
-                                // const TextWidget(
-                                //   text: "سعر التخفيضات إن وجد",
-                                //   textAlign: TextAlign.start,
-                                // ),
-                                // const SizedBox(height: 5),
-                                // TextFieldWidget(
-                                //   hintText: "سعر التخفيضات إن وجد",
-                                //   margin: EdgeInsets.all(0),
-                                //   controller: controller.salePrice,
-                                // ),
+                                const TextWidget(
+                                  text: "السعر",
+                                  textAlign: TextAlign.start,
+                                ),
+                                const SizedBox(height: 5),
+                                TextFieldWidget(
+                                  hintText: "السعر",
+                                  margin: EdgeInsets.all(0),
+                                  controller: controller.price,
+                                ),
+                                const TextWidget(
+                                  text: "سعر التخفيضات إن وجد",
+                                  textAlign: TextAlign.start,
+                                ),
+                                const SizedBox(height: 5),
+                                TextFieldWidget(
+                                  hintText: "سعر التخفيضات إن وجد",
+                                  margin: EdgeInsets.all(0),
+                                  controller: controller.salePrice,
+                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),

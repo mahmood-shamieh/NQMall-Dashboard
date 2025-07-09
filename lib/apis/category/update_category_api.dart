@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/main.dart';
@@ -15,16 +16,19 @@ import 'package:http/http.dart' as http;
 
 class UpdateCategoryApi {
   Future<ResponseModel> callApi(
-      {required CategoryModel categoryModel, File? image}) async {
+      {required CategoryModel categoryModel,
+      Uint8List? image,
+      String? imageName}) async {
     ApiHundler apiHundler = ApiHundler();
     apiHundler.setEndPoint('/category/update');
     apiHundler.setToken(getIt.get<UserModel>().Token!);
 
     http.MultipartFile? tempFile;
     if (image != null) {
-      tempFile = await http.MultipartFile.fromPath(
+      tempFile = await http.MultipartFile.fromBytes(
         'image',
-        image.path,
+        image,
+        filename: imageName,
       );
     }
 

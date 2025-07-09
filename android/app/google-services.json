@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "716979128456",
+    "project_id": "fcm-test-71bc6",
+    "storage_bucket": "fcm-test-71bc6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716979128456:android:37d5909d13e6a54b8eb73d",
+        "android_client_info": {
+          "package_name": "com.app.nqMallDashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncwQ0CCo8rIJVb0bjdWw7XUIyYM4H5W8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716979128456:android:067cd020a21d2c968eb73d",
+        "android_client_info": {
+          "package_name": "com.example.care_route"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncwQ0CCo8rIJVb0bjdWw7XUIyYM4H5W8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716979128456:android:d42be2dadad9828b8eb73d",
+        "android_client_info": {
+          "package_name": "com.mcart777.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncwQ0CCo8rIJVb0bjdWw7XUIyYM4H5W8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

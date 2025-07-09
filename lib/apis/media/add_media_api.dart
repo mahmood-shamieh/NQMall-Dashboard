@@ -30,12 +30,15 @@ class AddMediaApi {
     // http.MultipartFile tempFile =
     //     await http.MultipartFile.fromPath('image', image.path);
     List<http.MultipartFile> files = [];
+    int index = 0;
     for (Uint8List element in images) {
+      index += 1;
       files.add(
         http.MultipartFile.fromBytes(
           'images[]',
           element,
-          filename: DateTime.now().toString() +
+          filename: index.toString() +
+              DateTime.now().toString() +
               FileUtility.checkFiletype(file: element),
         ),
       );

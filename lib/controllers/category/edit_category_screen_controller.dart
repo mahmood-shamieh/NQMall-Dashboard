@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/apis/category/update_category_api.dart';
@@ -13,7 +15,10 @@ import '../../models/response_model.dart';
 
 class EditCategoryScreenController extends GetxController {
   RxBool loading = false.obs;
-  File? image;
+  // File? image;
+  Uint8List? imageBytes;
+  String? imageName;
+
   TextEditingController nameAr = TextEditingController();
   TextEditingController nameEn = TextEditingController();
   TextEditingController descAr = TextEditingController();
@@ -32,11 +37,22 @@ class EditCategoryScreenController extends GetxController {
   void chooseImage() async {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(type: FileType.image, allowMultiple: false);
-
     if (result != null) {
-      image = File(result.files.single.path!);
+      // if (kIsWeb) {
+      imageBytes = result.files.single.bytes;
+      imageName = result.files.single.name;
+      // image = null; // no File on web
+      // } else {
+      //   image = File(result.files.single.path!);
+      //   imageBytes = null;
+      //   imageName = null;
+      // }
       update();
-    } else {}
+    }
+    // if (result != null) {
+    //   image = File(result.files.single.path!);
+    //   update();
+    // } else {}
   }
 
   void submit() async {
@@ -50,7 +66,8 @@ class EditCategoryScreenController extends GetxController {
             DescriptionAr: descAr.text.trim(),
             DescriptionEn: descEn.text.trim(),
           ),
-          image: image);
+          image: imageBytes,
+          imageName: imageName);
       loading(false);
       update();
       if (responseModel.code == 200) {

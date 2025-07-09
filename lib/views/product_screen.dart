@@ -404,116 +404,273 @@ class ProductScreen extends StatelessWidget {
                               ? Center(
                                   child: CircularProgressIndicator(),
                                 )
-                              : ListView(
-                                  children: controller.products!
-                                      .map(
-                                        (e) => ProductItem(
-                                          productModel: e,
-                                          actionWidget: SizedBox(
-                                            child: Directionality(
-                                              textDirection: currentDirection,
-                                              child: PopupMenuButton<String>(
-                                                // onSelected: handleClick,
-                                                itemBuilder:
-                                                    (BuildContext context) {
-                                                  return {'تعديل', 'حذف'}
-                                                      .map((String choice) {
-                                                    return PopupMenuItem<
-                                                        String>(
-                                                      value: choice,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          TextWidget(
-                                                            text: choice,
-                                                            color: choice ==
-                                                                    "حذف"
-                                                                ? MyTheme
-                                                                    .errorColor
-                                                                : MyTheme
-                                                                    .mainColor,
+                              : NotificationListener<ScrollNotification>(
+                                  onNotification: (notification) {
+                                    if (notification is ScrollEndNotification &&
+                                        notification.metrics.extentAfter == 0) {
+                                      controller.getBrandAtNextPage();
+                                    }
+                                    return false;
+                                  },
+                                  child: ListView(
+                                    controller: controller.scrollController,
+                                    children: controller.products!
+                                        .map(
+                                          (e) => ProductItem(
+                                            productModel: e,
+                                            isMobile: false,
+                                            actionWidget: SizedBox(
+                                              child: Directionality(
+                                                textDirection: currentDirection,
+                                                child: PopupMenuButton<String>(
+                                                  itemBuilder:
+                                                      (BuildContext context) {
+                                                    return [
+                                                      PopupMenuItem<String>(
+                                                        value: "تسعير المنتج",
+                                                        child: InkWell(
+                                                          onTap: () => Get.to(
+                                                            () =>
+                                                                ProductPricingScreen(
+                                                              productModel: e,
+                                                            ),
                                                           ),
-                                                          Icon(
-                                                            choice == "حذف"
-                                                                ? Icons.delete
-                                                                : Icons.edit,
-                                                            color: choice ==
-                                                                    "حذف"
-                                                                ? MyTheme
-                                                                    .errorColor
-                                                                : MyTheme
-                                                                    .mainColor,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              TextWidget(
+                                                                text:
+                                                                    "تسعير المنتج",
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .price_change,
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    );
-                                                  }).toList();
-                                                },
-                                                icon: Icon(
-                                                  Icons.menu,
-                                                  color: MyTheme.iconColor,
-                                                ), // Hamburger icon
-                                              ),
-                                            ),
-                                          ),
-                                          action: () => showDialog<void>(
-                                            context: context,
-                                            barrierDismissible:
-                                                false, // User must tap button to close dialog
-                                            builder: (BuildContext context) {
-                                              return DialogBoxWidget(
-                                                title: "العمليات",
-                                                actions: Wrap(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 140,
-                                                      child: MyButton(
-                                                        action: () => Get.to(
-                                                          () =>
-                                                              EditProductScreen(
+                                                      PopupMenuItem<String>(
+                                                        value: "تعديل",
+                                                        child: InkWell(
+                                                          onTap: () => Get.to(
+                                                            () =>
+                                                                ProductAttributesScreen(
+                                                              productModel: e,
+                                                            ),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              TextWidget(
+                                                                text:
+                                                                    "واصفات المنتج",
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .description,
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      PopupMenuItem<String>(
+                                                        value: "تعديل",
+                                                        child: InkWell(
+                                                          onTap: () => Get.to(
+                                                            () =>
+                                                                EditProductScreen(
+                                                              productModel: e,
+                                                            ),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              TextWidget(
+                                                                text: "تعديل",
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                              Icon(
+                                                                Icons.edit,
+                                                                color: MyTheme
+                                                                    .blackColor,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      PopupMenuItem<String>(
+                                                        value: "حذف",
+                                                        child: InkWell(
+                                                          onTap: () => controller
+                                                              .deleteProduct(
                                                                   productModel:
                                                                       e),
-                                                        ),
-                                                        height: 40,
-                                                        text: "تعديل",
-                                                        textColor:
-                                                            MyTheme.mainColor,
-                                                        buttonColor:
-                                                            MyTheme.iconColor,
-                                                        fontSize: 16,
-                                                        icon: Icon(
-                                                          Icons.edit_note_sharp,
-                                                          color:
-                                                              MyTheme.mainColor,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 140,
-                                                      child: MyButton(
-                                                        text: "حذف",
-                                                        textColor:
-                                                            MyTheme.iconColor,
-                                                        buttonColor:
-                                                            MyTheme.errorColor,
-                                                        fontSize: 16,
-                                                        icon: Icon(
-                                                          Icons.delete,
-                                                          color:
-                                                              MyTheme.iconColor,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              TextWidget(
+                                                                text: "حذف",
+                                                                color: MyTheme
+                                                                    .errorColor,
+                                                              ),
+                                                              Icon(
+                                                                Icons.delete,
+                                                                color: MyTheme
+                                                                    .errorColor,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      e.IsActive ?? false
+                                                          ? PopupMenuItem<
+                                                              String>(
+                                                              value:
+                                                                  "إلغاء تفعيل",
+                                                              child: InkWell(
+                                                                onTap: () => controller
+                                                                    .changeProductStatus(
+                                                                        productModel:
+                                                                            e,
+                                                                        status:
+                                                                            false),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    TextWidget(
+                                                                      text:
+                                                                          "إلغاء تفعيل",
+                                                                      color: MyTheme
+                                                                          .errorColor,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .close,
+                                                                      color: MyTheme
+                                                                          .errorColor,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : PopupMenuItem<
+                                                              String>(
+                                                              value: "تفعيل",
+                                                              child: InkWell(
+                                                                onTap: () => controller
+                                                                    .changeProductStatus(
+                                                                        productModel:
+                                                                            e,
+                                                                        status:
+                                                                            true),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    TextWidget(
+                                                                      text:
+                                                                          "تفعيل",
+                                                                      color: MyTheme
+                                                                          .greenColor,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .check,
+                                                                      color: MyTheme
+                                                                          .greenColor,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                    ];
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.menu,
+                                                    color: MyTheme.iconColor,
+                                                  ), // Hamburger icon
                                                 ),
-                                              );
-                                            },
+                                              ),
+                                            ),
+                                            action: () => showDialog<void>(
+                                              context: context,
+                                              barrierDismissible:
+                                                  false, // User must tap button to close dialog
+                                              builder: (BuildContext context) {
+                                                return DialogBoxWidget(
+                                                  title: "العمليات",
+                                                  actions: Wrap(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 140,
+                                                        child: MyButton(
+                                                          action: () => Get.to(
+                                                            () =>
+                                                                EditProductScreen(
+                                                                    productModel:
+                                                                        e),
+                                                          ),
+                                                          height: 40,
+                                                          text: "تعديل",
+                                                          textColor:
+                                                              MyTheme.mainColor,
+                                                          buttonColor:
+                                                              MyTheme.iconColor,
+                                                          fontSize: 16,
+                                                          icon: Icon(
+                                                            Icons
+                                                                .edit_note_sharp,
+                                                            color: MyTheme
+                                                                .mainColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 140,
+                                                        child: MyButton(
+                                                          text: "حذف",
+                                                          textColor:
+                                                              MyTheme.iconColor,
+                                                          buttonColor: MyTheme
+                                                              .errorColor,
+                                                          fontSize: 16,
+                                                          icon: Icon(
+                                                            Icons.delete,
+                                                            color: MyTheme
+                                                                .iconColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                      .toList(),
+                                        )
+                                        .toList(),
+                                  ),
                                 ),
                         ),
                       )

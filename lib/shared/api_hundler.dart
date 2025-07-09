@@ -63,12 +63,42 @@ class ApiHundler {
     // bool result = await InternetConnectionChecker().hasConnection;
     // if (result == true) {
     print("::::::::::> Api ${apiLink} Called");
+    print("::::::::::> Api Body ${body}");
     try {
       var data = await http
           .post(apiLink, body: body, headers: headers)
           .timeout(Duration(seconds: timeOutConnection));
       print("::::::::::> Api ${apiLink} Finished");
       print("::::::::::> Api Response ${data}");
+      print("::::::::::> Api Response ${data.body}");
+
+      return data;
+    } catch (e) {
+      e.printError();
+      print(e);
+      if (e is TimeoutException) {
+        throw ConnectionTimeOut();
+      } else {
+        throw UndefindProblem();
+      }
+    }
+    // } else {
+    //   throw NoInternetConnection();
+    // }
+  }
+
+  put({dynamic body}) async {
+    // bool result = await InternetConnectionChecker().hasConnection;
+    // if (result == true) {
+    print("::::::::::> Api ${apiLink} Called");
+    print("::::::::::> Api Body ${body}");
+    try {
+      var data = await http
+          .put(apiLink, body: body, headers: headers)
+          .timeout(Duration(seconds: timeOutConnection));
+      print("::::::::::> Api ${apiLink} Finished");
+      print("::::::::::> Api Response ${data}");
+      print("::::::::::> Api Response ${data.body}");
 
       return data;
     } catch (e) {

@@ -98,7 +98,7 @@ class EditBrandScreen extends StatelessWidget {
                                   color: MyTheme.appBarColor,
                                   image: controller.image != null
                                       ? DecorationImage(
-                                          image: FileImage(
+                                          image: MemoryImage(
                                             controller.image!,
                                           ),
                                           fit: BoxFit.cover)

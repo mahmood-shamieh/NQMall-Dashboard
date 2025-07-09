@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:nq_mall_dashboard/models/admin_prev_model.dart';
+import 'package:nq_mall_dashboard/models/app_config_model.dart';
+
 class UserModel {
   int? Id;
   String? Email;
@@ -14,6 +17,9 @@ class UserModel {
   DateTime? UpdatedAt;
   bool? IsActive;
   String? Role;
+  String? FcmToken;
+  List<AdminPrevModel>? admin_prevs;
+  AppConfigModel? appConfig;
   UserModel({
     this.Id,
     this.Email,
@@ -27,6 +33,9 @@ class UserModel {
     this.UpdatedAt,
     this.IsActive,
     this.Role,
+    this.FcmToken,
+    this.admin_prevs,
+    this.appConfig,
   });
 
   UserModel copyWith({
@@ -42,6 +51,9 @@ class UserModel {
     DateTime? UpdatedAt,
     bool? IsActive,
     String? Role,
+    String? FcmToken,
+    List<AdminPrevModel>? admin_prevs,
+    AppConfigModel? appConfig,
   }) {
     return UserModel(
       Id: Id ?? this.Id,
@@ -56,6 +68,9 @@ class UserModel {
       UpdatedAt: UpdatedAt ?? this.UpdatedAt,
       IsActive: IsActive ?? this.IsActive,
       Role: Role ?? this.Role,
+      FcmToken: FcmToken ?? this.FcmToken,
+      admin_prevs: admin_prevs ?? this.admin_prevs,
+      appConfig: appConfig ?? this.appConfig,
     );
   }
 
@@ -73,6 +88,9 @@ class UserModel {
       'UpdatedAt': UpdatedAt?.toString(),
       'IsActive': IsActive,
       'Role': Role,
+      'FcmToken': FcmToken,
+      'admin_prevs': admin_prevs?.map((x) => x.toMap()).toList(),
+      'appConfig': appConfig?.toMap(),
     };
   }
 
@@ -94,6 +112,14 @@ class UserModel {
           map['UpdatedAt'] != null ? DateTime.parse(map['UpdatedAt']) : null,
       IsActive: map['IsActive'] != null ? map['IsActive'] as bool : null,
       Role: map['Role'] != null ? map['Role'] as String : null,
+      FcmToken: map['FcmToken'] != null ? map['FcmToken'] as String : null,
+      admin_prevs: map['admin_prevs'] != null
+          ? List<AdminPrevModel>.from(
+              map['admin_prevs'].map((x) => AdminPrevModel.fromMap(x)))
+          : null,
+      appConfig: map['appConfig'] != null
+          ? AppConfigModel.fromMap(map['appConfig'])
+          : null,
     );
   }
 
@@ -104,7 +130,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(Id: $Id, Email: $Email, PasswordHash: $PasswordHash, password: $password, Token: $Token, FullName: $FullName, Address: $Address, PhoneNumber: $PhoneNumber, CreatedAt: $CreatedAt, UpdatedAt: $UpdatedAt, IsActive: $IsActive, Role: $Role)';
+    return 'UserModel(Id: $Id, Email: $Email, PasswordHash: $PasswordHash, password: $password, Token: $Token, FullName: $FullName, Address: $Address, PhoneNumber: $PhoneNumber, CreatedAt: $CreatedAt, UpdatedAt: $UpdatedAt, IsActive: $IsActive, Role: $Role, FcmToken: $FcmToken, admin_prevs: $admin_prevs, appConfig: $appConfig)';
   }
 
   @override
@@ -122,7 +148,9 @@ class UserModel {
         other.CreatedAt == CreatedAt &&
         other.UpdatedAt == UpdatedAt &&
         other.IsActive == IsActive &&
-        other.Role == Role;
+        other.Role == Role &&
+        other.FcmToken == FcmToken &&
+        other.appConfig == appConfig;
   }
 
   @override
@@ -138,6 +166,8 @@ class UserModel {
         CreatedAt.hashCode ^
         UpdatedAt.hashCode ^
         IsActive.hashCode ^
-        Role.hashCode;
+        Role.hashCode ^
+        FcmToken.hashCode ^
+        appConfig.hashCode;
   }
 }

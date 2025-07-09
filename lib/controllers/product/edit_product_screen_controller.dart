@@ -3,7 +3,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nq_mall_dashboard/apis/attributes/get_product_attributes_api.dart';
+import 'package:nq_mall_dashboard/apis/media/delete_media_api.dart';
 import 'package:nq_mall_dashboard/apis/media/get_product_media_api.dart';
+import 'package:nq_mall_dashboard/apis/product/update_product_api.dart';
+import 'package:nq_mall_dashboard/controllers/product/product_screen_controller.dart';
+import 'package:nq_mall_dashboard/exception/connection_time_out.dart';
+import 'package:nq_mall_dashboard/exception/un_defined_problem.dart';
 import 'package:nq_mall_dashboard/main.dart';
 import 'package:nq_mall_dashboard/models/attribute_model.dart';
 import 'package:nq_mall_dashboard/models/media_model.dart';
@@ -87,6 +92,56 @@ class EditProductScreenController extends GetxController {
     update();
   }
 
+  Future deleteMedia() async {
+    loadDetails(true);
+    update();
+    for (MediaModel element in imageToDelete) {
+      try {
+        ResponseModel responseModel =
+            await DeleteMediaApi().callApi(mediaModel: element);
+        if (responseModel.code == 200) {
+          attributes = (responseModel.data as List)
+              .map(
+                (e) => AttributeModel.fromMap(e),
+              )
+              .toList();
+        } else {
+          return;
+        }
+      } catch (e) {}
+    }
+    loadDetails(false);
+    update();
+  }
+
+  updateProductDetails() async {
+    try {
+      loadDetails(true);
+      update();
+      ResponseModel responseModel = await UpdateProductApi().callApi(
+        productModel: productModel.copyWith(
+            NameAr: nameAr.text.trim(),
+            NameEn: nameEn.text.trim(),
+            DescriptionAr: descriptionAr.text.trim(),
+            DescriptionEn: descriptionEn.text.trim(),
+            Price: int.parse(price.text.trim()),
+            SalePrice: int.parse(salePrice.text.trim()),
+            media: []),
+      );
+      loadDetails(false);
+      update();
+      if (responseModel.code == 200) {
+        Get.back();
+        ProductScreenController productScreenController =
+            Get.find<ProductScreenController>();
+        productScreenController.onInit();
+      }
+    } catch (e) {
+      if (e is ConnectionTimeOut) {
+      } else if (e is UndefindProblem) {}
+    }
+  }
+
   changeViewLanguages({required String lang}) {
     currentLanguages(lang);
     if (currentLanguages.value == 'ar') {
@@ -95,5 +150,10 @@ class EditProductScreenController extends GetxController {
       currentDirection = TextDirection.ltr;
     }
     update();
+  }
+
+  editProductOperation() async {
+    await deleteMedia();
+    await updateProductDetails();
   }
 }
